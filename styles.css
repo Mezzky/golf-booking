@@ -1,3 +1,9 @@
+
+/* Global Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Custom scrollbar for modern feel */
 ::-webkit-scrollbar {
   width: 8px;

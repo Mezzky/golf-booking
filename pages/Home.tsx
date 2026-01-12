@@ -1,44 +1,41 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import SectionContainer from '../components/SectionContainer';
-import { TOURS, SERVICES, DESTINATIONS, TESTIMONIALS, BLOG_POSTS, IMAGES } from '../data';
+import { TOURS, SERVICES, DESTINATIONS, TESTIMONIALS, IMAGES } from '../data';
 import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
-  const [scrollOffset, setScrollOffset] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [testiActiveIndex, setTestiActiveIndex] = useState(0);
   const parallaxRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const testiCarouselRef = useRef<HTMLDivElement>(null);
   
-  // Create a tripled array for seamless infinite looping
   const tourList = Object.values(TOURS);
   const tripledTours = [...tourList, ...tourList, ...tourList];
   const numRealTours = tourList.length;
 
+  // For testimonials
+  const tripleTestimonials = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
+  const numRealTestis = TESTIMONIALS.length;
+
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollOffset(window.scrollY);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Initial scroll position to the middle set of cards
     const timer = setTimeout(() => {
       if (carouselRef.current) {
         const el = carouselRef.current;
-        const scrollWidth = el.scrollWidth;
-        el.scrollLeft = scrollWidth / 3;
+        el.scrollLeft = el.scrollWidth / 3;
+      }
+      if (testiCarouselRef.current) {
+        const el = testiCarouselRef.current;
+        el.scrollLeft = el.scrollWidth / 3;
       }
     }, 100);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       clearTimeout(timer);
     };
   }, []);
 
-  /**
-   * Seamless jump logic and pagination tracking
-   */
   const handleCarouselScroll = () => {
     const el = carouselRef.current;
     if (!el) return;
@@ -46,14 +43,12 @@ const Home: React.FC = () => {
     const { scrollLeft, scrollWidth, offsetWidth } = el;
     const third = scrollWidth / 3;
 
-    // 1. Seamless jump logic (silent repositioning)
     if (scrollLeft < 50) {
       el.scrollLeft = scrollLeft + third;
     } else if (scrollLeft > (third * 2) + 50) {
       el.scrollLeft = scrollLeft - third;
     }
 
-    // 2. Pagination calculation
     const cardWidthWithGap = 364;
     const currentCenterIndex = Math.round((scrollLeft + offsetWidth / 2 - cardWidthWithGap / 2) / cardWidthWithGap);
     const normalizedIndex = (currentCenterIndex % numRealTours + numRealTours) % numRealTours;
@@ -63,45 +58,54 @@ const Home: React.FC = () => {
     }
   };
 
-  const scrollCarousel = (direction: 'left' | 'right') => {
-    const el = carouselRef.current;
+  const handleTestiScroll = () => {
+    const el = testiCarouselRef.current;
     if (!el) return;
 
-    const cardWidthWithGap = 364;
-    const moveAmount = direction === 'left' ? -cardWidthWithGap : cardWidthWithGap;
+    const { scrollLeft, scrollWidth, offsetWidth } = el;
+    const third = scrollWidth / 3;
+
+    if (scrollLeft < 50) {
+      el.scrollLeft = scrollLeft + third;
+    } else if (scrollLeft > (third * 2) + 50) {
+      el.scrollLeft = scrollLeft - third;
+    }
+
+    const cardWidthWithGap = 400; // Adjusted for testimonial width
+    const currentCenterIndex = Math.round((scrollLeft + offsetWidth / 2 - cardWidthWithGap / 2) / cardWidthWithGap);
+    const normalizedIndex = (currentCenterIndex % numRealTestis + numRealTestis) % numRealTestis;
     
+    if (normalizedIndex !== testiActiveIndex) {
+      setTestiActiveIndex(normalizedIndex);
+    }
+  };
+
+  const scrollCarousel = (ref: React.RefObject<HTMLDivElement>, direction: 'left' | 'right', step: number = 364) => {
+    const el = ref.current;
+    if (!el) return;
+
+    const moveAmount = direction === 'left' ? -step : step;
     el.scrollBy({
       left: moveAmount,
       behavior: 'smooth'
     });
   };
 
-  const scrollToTour = (index: number) => {
-    const el = carouselRef.current;
-    if (!el) return;
+  const [parallaxY, setParallaxY] = useState(0);
 
-    const cardWidthWithGap = 364;
-    const { scrollWidth, scrollLeft } = el;
-    const third = scrollWidth / 3;
-    
-    const currentSet = Math.floor(scrollLeft / third);
-    const targetScroll = (currentSet * third) + (index * cardWidthWithGap);
-    
-    el.scrollTo({
-      left: targetScroll,
-      behavior: 'smooth'
-    });
-  };
-
-  const getParallaxValue = () => {
-    if (!parallaxRef.current) return 0;
-    const rect = parallaxRef.current.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const elementCenter = rect.top + rect.height / 2;
-    const viewportCenter = viewportHeight / 2;
-    const normalized = (elementCenter - viewportCenter) / viewportHeight;
-    return normalized * 120;
-  };
+  useEffect(() => {
+    const onScroll = () => {
+      if (!parallaxRef.current) return;
+      const rect = parallaxRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const elementCenter = rect.top + rect.height / 2;
+      const viewportCenter = viewportHeight / 2;
+      const normalized = (elementCenter - viewportCenter) / viewportHeight;
+      setParallaxY(normalized * 120);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <div className="flex flex-col w-full overflow-hidden">
@@ -115,7 +119,7 @@ const Home: React.FC = () => {
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full text-white">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl text-left">
             <h1 className="text-5xl md:text-8xl font-extrabold mb-8 leading-[1.1] tracking-tight text-white drop-shadow-sm">
               One-Stop <br/>
               <span className="text-gold-400">Golf Excellence</span>
@@ -173,7 +177,7 @@ const Home: React.FC = () => {
                   backgroundImage: `url(${IMAGES.aboutImage})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
-                  transform: `translateY(${getParallaxValue()}px)`
+                  transform: `translateY(${parallaxY}px)`
                 }}
               />
             </div>
@@ -198,13 +202,13 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Core Services Grid */}
+      {/* 4. Core Services Grid - Stacked on Tablet (md) */}
       <SectionContainer id="services" className="bg-white">
         <div className="text-center mb-12 md:mb-20">
           <h2 className="text-4xl md:text-5xl font-black text-golf-900 mb-6 tracking-tight">How We Serve You</h2>
           <p className="text-stone-600 max-w-2xl mx-auto text-lg font-medium">Expertly curated solutions that remove the complexity from your golfing life.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-10">
+        <div className="flex flex-col lg:grid lg:grid-cols-3 gap-10">
           {SERVICES.map((service, idx) => (
             <div key={idx} className="bg-white p-12 rounded-none shadow-sm border border-stone-200 hover:shadow-2xl hover:shadow-golf-900/5 transition-all duration-500 group relative overflow-hidden">
               <div className="absolute top-0 right-0 p-6">
@@ -237,14 +241,14 @@ const Home: React.FC = () => {
           
           <div className="flex gap-3">
             <button 
-              onClick={() => scrollCarousel('left')}
+              onClick={() => scrollCarousel(carouselRef, 'left')}
               className="w-14 h-14 flex items-center justify-center border border-stone-200 bg-white text-stone-500 hover:text-golf-600 hover:border-gold-600 hover:bg-stone-50 transition-all duration-300 rounded-none shadow-sm active:scale-90"
               aria-label="Previous Package"
             >
               <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
             <button 
-              onClick={() => scrollCarousel('right')}
+              onClick={() => scrollCarousel(carouselRef, 'right')}
               className="w-14 h-14 flex items-center justify-center border border-stone-200 bg-white text-stone-500 hover:text-golf-600 hover:border-gold-600 hover:bg-stone-50 transition-all duration-300 rounded-none shadow-sm active:scale-90"
               aria-label="Next Package"
             >
@@ -253,7 +257,6 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        {/* The Carousel Track */}
         <div 
           ref={carouselRef}
           onScroll={handleCarouselScroll}
@@ -266,7 +269,6 @@ const Home: React.FC = () => {
               key={`${tour.id}-${index}`} 
               className="flex-shrink-0 w-[80vw] md:w-[340px] snap-center group flex flex-col bg-white border border-stone-200 hover:border-gold-400 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 rounded-none relative overflow-hidden"
             >
-              {/* Image Area */}
               <div className="aspect-[16/11] overflow-hidden rounded-none relative bg-stone-100">
                 <img 
                   src={tour.heroImage} 
@@ -276,7 +278,6 @@ const Home: React.FC = () => {
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-700" />
               </div>
               
-              {/* Content Area */}
               <div className="p-7 flex flex-col flex-grow bg-white">
                 <div className="mb-2">
                   <span className="text-[8px] font-black text-stone-400 uppercase tracking-[0.3em]">
@@ -309,12 +310,10 @@ const Home: React.FC = () => {
           ))}
         </div>
 
-        {/* REFINED CENTERED PAGINATION */}
         <div className="flex justify-center items-center gap-3 mt-12">
           {tourList.map((_, idx) => (
             <button
               key={idx}
-              onClick={() => scrollToTour(idx)}
               className="group relative flex items-center justify-center p-2 focus:outline-none"
               aria-label={`Go to tour package ${idx + 1}`}
             >
@@ -323,11 +322,6 @@ const Home: React.FC = () => {
                   ? 'w-12 bg-gold-500 shadow-[0_0_15px_rgba(245,158,11,0.3)]' 
                   : 'w-4 bg-stone-300 group-hover:bg-stone-400 group-hover:w-6'
               }`} />
-              {activeIndex === idx && (
-                <span className="absolute -bottom-6 text-[8px] font-black text-gold-600 uppercase tracking-widest opacity-0 animate-fade-in" style={{animationDelay: '0.2s', animationFillMode: 'forwards', opacity: 1}}>
-                  0{idx + 1}
-                </span>
-              )}
             </button>
           ))}
         </div>
@@ -335,7 +329,6 @@ const Home: React.FC = () => {
 
       {/* 6. Destination Highlights - CLEAR IMAGES BENTO GRID */}
       <div className="bg-golf-950 py-8 md:py-16 text-white relative overflow-hidden">
-        {/* Subtle Background Accent */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-golf-800/20 rounded-none blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
         
         <SectionContainer>
@@ -355,7 +348,6 @@ const Home: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-2 gap-6 min-h-[600px] md:min-h-[800px]">
-            {/* 1. Malaysia - Large Featured */}
             <div className="md:col-span-7 md:row-span-2 group relative overflow-hidden bg-stone-900 border border-white/10 shadow-2xl h-[400px] md:h-auto">
               <img 
                 src={DESTINATIONS[0].image} 
@@ -363,11 +355,9 @@ const Home: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 group-hover:rotate-1 transition-transform duration-[2000ms] ease-out" 
               />
               <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/20 to-transparent" />
-              
               <div className="absolute top-6 left-6 md:top-10 md:left-10">
                 <span className="text-[10px] font-black text-white uppercase tracking-[0.3em] border-l-2 border-gold-500 pl-3 bg-black/30 backdrop-blur-sm py-1 pr-3">Featured Hub</span>
               </div>
-
               <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-16">
                 <span className="text-gold-400 text-[10px] md:text-sm font-black uppercase tracking-[0.4em] mb-2 md:mb-4 drop-shadow-lg">{DESTINATIONS[0].count}</span>
                 <h4 className="text-4xl md:text-7xl font-black text-white mb-4 md:mb-8 italic tracking-tighter drop-shadow-2xl">{DESTINATIONS[0].country}</h4>
@@ -379,7 +369,6 @@ const Home: React.FC = () => {
               </div>
             </div>
 
-            {/* 2. Thailand - Tall Sidebar */}
             <div className="md:col-span-5 md:row-span-1 group relative overflow-hidden bg-stone-900 border border-white/10 shadow-xl h-[300px] md:h-auto">
               <img 
                 src={DESTINATIONS[1].image} 
@@ -396,7 +385,6 @@ const Home: React.FC = () => {
               </div>
             </div>
 
-            {/* 3. Türkiye - Small Box */}
             <div className="md:col-span-2 md:row-span-1 group relative overflow-hidden bg-stone-900 border border-white/10 shadow-xl h-[300px] md:h-auto">
               <img 
                 src={DESTINATIONS[2].image} 
@@ -411,7 +399,6 @@ const Home: React.FC = () => {
               </div>
             </div>
 
-            {/* 4. Indonesia - Horizontal Small */}
             <div className="md:col-span-3 md:row-span-1 group relative overflow-hidden bg-stone-900 border border-white/10 shadow-xl h-[300px] md:h-auto">
               <img 
                 src={DESTINATIONS[3].image} 
@@ -465,48 +452,115 @@ const Home: React.FC = () => {
         </div>
       </SectionContainer>
 
-      {/* 8. Social Proof */}
-      <div className="bg-stone-50 py-8 md:py-16 border-y border-stone-200">
-        <SectionContainer>
-          <div className="text-center mb-16 md:mb-20">
-            <h2 className="text-4xl font-black text-golf-900 tracking-tight">Voices from the Fairway</h2>
+      {/* 8. Social Proof - CAROUSEL VERSION */}
+      <div className="bg-stone-50 py-8 md:py-16 border-y border-stone-200 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-10">
+          <div className="max-w-2xl">
+            <h2 className="text-[10px] font-black text-stone-400 uppercase tracking-[0.4em] mb-4">Reviews</h2>
+            <h3 className="text-4xl md:text-5xl font-black text-golf-900 tracking-tight">Voices from the Fairway</h3>
           </div>
-          <div className="grid md:grid-cols-3 gap-10">
-            {TESTIMONIALS.map((t, idx) => (
-              <div key={idx} className="bg-white p-10 rounded-none border border-stone-200 shadow-sm relative">
-                <svg className="absolute top-10 right-10 w-12 h-12 text-stone-100" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 15.238 16.255 13 19.017 13L21.017 13L21.017 21L14.017 21ZM3.01697 21L3.01697 18C3.01697 15.238 5.255 13 8.01697 13L10.017 13L10.017 21L3.01697 21Z"/></svg>
-                <p className="text-stone-600 text-lg italic mb-10 leading-relaxed relative z-10">"{t.content}"</p>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-golf-100 rounded-none flex items-center justify-center font-black text-golf-700">
-                    {t.initials}
-                  </div>
-                  <div>
-                    <h5 className="font-black text-stone-900 leading-tight">{t.name}</h5>
-                    <p className="text-xs font-bold text-stone-400 uppercase tracking-widest">{t.role}</p>
-                  </div>
+          
+          <div className="flex gap-3">
+            <button 
+              onClick={() => scrollCarousel(testiCarouselRef, 'left', 400)}
+              className="w-14 h-14 flex items-center justify-center border border-stone-200 bg-white text-stone-500 hover:text-golf-600 hover:border-gold-600 hover:bg-stone-50 transition-all duration-300 rounded-none shadow-sm active:scale-90"
+              aria-label="Previous Testimonial"
+            >
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
+            <button 
+              onClick={() => scrollCarousel(testiCarouselRef, 'right', 400)}
+              className="w-14 h-14 flex items-center justify-center border border-stone-200 bg-white text-stone-500 hover:text-golf-600 hover:border-gold-600 hover:bg-stone-50 transition-all duration-300 rounded-none shadow-sm active:scale-90"
+              aria-label="Next Testimonial"
+            >
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div 
+          ref={testiCarouselRef}
+          onScroll={handleTestiScroll}
+          className="flex overflow-x-auto gap-6 px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] scrollbar-hide snap-x snap-mandatory no-scrollbar pb-12"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {tripleTestimonials.map((t, idx) => (
+            <div 
+              key={`${t.name}-${idx}`} 
+              className="flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-white p-10 rounded-none border border-stone-200 shadow-sm relative group hover:border-gold-400 transition-all duration-500"
+            >
+              <svg className="absolute top-10 right-10 w-12 h-12 text-stone-100 group-hover:text-gold-50 transition-colors duration-500" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 15.238 16.255 13 19.017 13L21.017 13L21.017 21L14.017 21ZM3.01697 21L3.01697 18C3.01697 15.238 5.255 13 8.01697 13L10.017 13L10.017 21L3.01697 21Z"/></svg>
+              <p className="text-stone-600 text-lg italic mb-10 leading-relaxed relative z-10">"{t.content}"</p>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-golf-100 rounded-none flex items-center justify-center font-black text-golf-700 group-hover:bg-golf-500 group-hover:text-white transition-all duration-500">
+                  {t.initials}
+                </div>
+                <div>
+                  <h5 className="font-black text-stone-900 leading-tight">{t.name}</h5>
+                  <p className="text-xs font-bold text-stone-400 uppercase tracking-widest">{t.role}</p>
                 </div>
               </div>
-            ))}
-          </div>
-        </SectionContainer>
+            </div>
+          ))}
+        </div>
+
+        {/* Testimonial pagination dots */}
+        <div className="flex justify-center items-center gap-3">
+          {TESTIMONIALS.map((_, idx) => (
+            <div
+              key={idx}
+              className={`h-1 rounded-none transition-all duration-500 ${
+                testiActiveIndex === idx 
+                  ? 'w-10 bg-gold-500' 
+                  : 'w-2 bg-stone-300'
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
-      {/* 10. Final CTA */}
-      <div className="bg-golf-900 py-8 md:py-16 text-center text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-golf-800 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-golf-400/20 via-transparent to-transparent"></div>
-        <SectionContainer className="relative z-10">
-          <h2 className="text-5xl md:text-7xl font-black mb-10 tracking-tight">Ready for Your <br/> Next Round?</h2>
-          <p className="text-xl text-stone-400 mb-16 max-w-2xl mx-auto font-medium">Join Singapore's premier community of golfers.</p>
-          <div className="flex flex-wrap justify-center gap-6">
-            <button className="px-12 py-6 bg-golf-500 hover:bg-golf-600 text-white font-black rounded-none transition-all shadow-2xl hover:-translate-y-1 uppercase tracking-[0.2em] text-sm">
-              Start Booking
-            </button>
-            <a href="https://api.whatsapp.com/send/?phone=6590011558" className="px-12 py-6 bg-white text-golf-900 font-black rounded-none hover:bg-stone-100 transition-all shadow-2xl uppercase tracking-[0.2em] text-sm">
-              Talk to Us
-            </a>
+      {/* 10. Final CTA - REDESIGNED PER MOCKUP */}
+      <section className="relative h-[80vh] min-h-[600px] flex items-center overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center z-0 scale-105"
+          style={{ backgroundImage: `url(${IMAGES.finalCtaBg})` }}
+        >
+          <div className="absolute inset-0 bg-black/20" />
+        </div>
+        
+        <SectionContainer className="relative z-10 w-full">
+          <div className="max-w-xl bg-golf-950/60 backdrop-blur-2xl p-8 md:p-16 border border-white/10 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)]">
+            <h4 className="text-[10px] font-black text-gold-400 uppercase tracking-[0.4em] mb-6">Join the Community</h4>
+            
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-8 italic tracking-tight leading-[1.15]">
+              Ready for Your <br className="hidden md:block"/> Next Round?
+            </h2>
+            
+            <p className="text-stone-200 text-lg mb-12 font-medium leading-relaxed opacity-90 max-w-sm">
+              Join Singapore's premier community of golfers. We handle the logistics so you can focus on the perfect swing.
+            </p>
+            
+            <div className="flex flex-col gap-4">
+              <button className="group flex items-center justify-between px-8 py-5 border border-white/30 text-white font-black hover:bg-white hover:text-golf-950 transition-all duration-500 uppercase tracking-[0.2em] text-[10px] md:text-xs">
+                Start Booking
+                <svg className="w-5 h-5 transform group-hover:translate-x-3 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              
+              <a 
+                href="https://api.whatsapp.com/send/?phone=6590011558" 
+                className="group flex items-center justify-between px-8 py-5 border border-white/10 bg-white/5 hover:bg-white/10 text-white font-black transition-all duration-500 uppercase tracking-[0.2em] text-[10px] md:text-xs"
+              >
+                Talk to Us
+                <svg className="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+            </div>
           </div>
         </SectionContainer>
-      </div>
+      </section>
     </div>
   );
 };

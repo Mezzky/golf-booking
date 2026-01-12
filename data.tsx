@@ -9,8 +9,9 @@ export const IMAGES = {
   tkLogo: "https://cdn.sanity.io/images/osg5upb6/production/091af9efc37bd56d93ccda0d31023f4dc712b590-400x400.jpg",
   planeIcon: "https://cdn.sanity.io/images/osg5upb6/production/67dee4d9ad0d9d233df25292b1d84c54f0a354bb-400x400.png",
   heroLanding: "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&q=80&w=2000",
-  hmsImage: "https://images.unsplash.com/photo-1592919016381-da0857ac0f12?auto=format&fit=crop&q=80&w=1200",
+  hmsImage: "https://cdn.sanity.io/images/iqsqxgxl/production/be76b0c679be20d4a4c5cad3630169927ad744ec-1920x2400.jpg",
   aboutImage: "https://cdn.sanity.io/images/iqsqxgxl/production/cedd21b9cd4a3acb7bc21e8eb1f90e81e1b6896f-1920x2880.jpg",
+  finalCtaBg: "https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?auto=format&fit=crop&q=80&w=2000",
 };
 
 export const SERVICES: ServiceItem[] = [
@@ -43,8 +44,12 @@ export const DESTINATIONS: DestinationItem[] = [
 
 export const TESTIMONIALS: TestimonialItem[] = [
   { name: "Robert Tan", role: "Frequent Golfer", content: "The best golf service in Singapore. The KLGCC tour was seamless and the hotel choice was perfect.", initials: "RT" },
-  { name: "Sarah Lim", role: "Beginner", content: "Setting up my handicap was so easy with Golfbooking.sg. They handled everything with the SGA professionally.", initials: "SL" },
+  { name: "Sarah Lim", role: "Beginner", content: "Setting up my handicap was so easy with Golfbooking.sg. They handled everything professionally with the SGA.", initials: "SL" },
   { name: "James Wilson", role: "Corporate Client", content: "Outstanding transportation service. Our corporate retreat to Melaka was handled with absolute precision.", initials: "JW" },
+  { name: "David Chen", role: "Handicap Client", content: "Exceptional attention to detail. Every course on the Malaysia tour was a gem, and the transport was always on time.", initials: "DC" },
+  { name: "Amanda Phua", role: "Solo Golfer", content: "As a solo golfer, I felt completely welcomed. The coordination was flawless and I made great friends on the trip.", initials: "AP" },
+  { name: "Kelvin Seah", role: "WHS Member", content: "The HMS service is a lifesaver. No more tracking scores manually; it's all done for me via their seamless portal.", initials: "KS" },
+  { name: "Michelle Wong", role: "Travel Enthusiast", content: "Golfing in Türkiye was a dream. The resort was 5-star and the Sultan course was world-class. Highly recommended!", initials: "MW" },
 ];
 
 export const BLOG_POSTS: BlogPostItem[] = [
