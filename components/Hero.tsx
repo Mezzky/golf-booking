@@ -33,7 +33,8 @@ const Hero: React.FC<HeroProps> = ({ tour }) => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 scale-105 transition-all duration-1000 animate-fade-in"
         style={{ backgroundImage: `url(${tour.heroImage})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-golf-900/90" />
+        {/* Lighter overlay for Tour pages */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/30" />
       </div>
 
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
