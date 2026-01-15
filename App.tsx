@@ -4,6 +4,7 @@ import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Tour from './pages/Tour';
+import Destinations from './pages/Destinations';
 import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
 
@@ -31,6 +32,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/tour/:tourId" element={<Tour />} />
+            <Route path="/destinations" element={<Destinations />} />
             {/* Catch-all redirect to Home */}
             <Route path="*" element={<Home />} />
           </Routes>

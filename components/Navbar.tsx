@@ -1,14 +1,14 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { IMAGES } from '../data';
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const location = useLocation();
-
-  const isTourPage = location.pathname.startsWith('/tour/');
+  const dropdownTimer = useRef<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,44 +18,68 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close menu on route change
   useEffect(() => {
     setIsMenuOpen(false);
+    setActiveDropdown(null);
   }, [location]);
 
-  const scrollTo = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMenuOpen(false);
+  const handleMouseEnter = (menu: string) => {
+    if (dropdownTimer.current) window.clearTimeout(dropdownTimer.current);
+    setActiveDropdown(menu);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimer.current = window.setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
   };
 
   const WHATSAPP_URL = "https://api.whatsapp.com/send/?phone=6590011558&text=Hello+Welcome+to+GolfBooking.sg.+How+may+we+assist+you+today%3F";
 
-  const navItems = isTourPage 
-    ? ['Highlights', 'Itinerary', 'Accommodation', 'Pricing']
-    : ['Services', 'Tours', 'HMS', 'Insights'];
+  const navLinks = [
+    {
+      label: 'Tour Packages',
+      dropdown: [
+        { label: 'Golf Travel', path: '/tours#tours' },
+        { label: 'Stay & Play', path: '/tours#tours' }
+      ]
+    },
+    { label: 'Destination', path: '/destinations' },
+    {
+      label: 'Services',
+      dropdown: [
+        { label: 'HMS', path: '/#hms' },
+        { label: 'Tee Time Booking', path: '/#services' },
+        { label: 'Golf Transport', path: '/#services' }
+      ]
+    },
+    { label: 'About Us', path: '/#about' },
+    { label: 'Contact Us', path: '#footer' }
+  ];
+
+  const scrollToFooter = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const footer = document.querySelector('footer');
+    footer?.scrollIntoView({ behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
 
   return (
     <>
-      <nav className={`fixed top-0 w-full z-[60] transition-all duration-500 ease-in-out ${scrolled || isMenuOpen ? 'bg-white/95 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-6'}`}>
+      <nav className={`fixed top-0 w-full z-[60] transition-all duration-500 ease-in-out ${scrolled || isMenuOpen ? 'bg-white/95 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-5'}`}>
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
           {/* Left Side: Logo */}
           <Link 
             to="/"
-            className="flex items-center gap-3 cursor-pointer flex-shrink-0 z-[70]" 
-            onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-              setIsMenuOpen(false);
-            }}
+            className="flex items-center gap-2.5 cursor-pointer flex-shrink-0 z-[70]" 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             <img 
               src={IMAGES.logo} 
               alt="golfbooking.sg Logo" 
-              className={`w-auto object-contain transition-all duration-500 ease-in-out ${scrolled ? 'h-10 md:h-12' : 'h-16 md:h-20'}`}
+              className={`w-auto object-contain transition-all duration-500 ease-in-out ${scrolled ? 'h-8 md:h-9' : 'h-11 md:h-13'}`}
             />
-            <div className={`font-black tracking-tighter uppercase transition-all duration-500 ${scrolled || isMenuOpen ? 'text-golf-900 text-sm md:text-base' : 'text-white text-lg md:text-2xl'}`}>
+            <div className={`font-black tracking-tighter uppercase transition-all duration-500 ${scrolled || isMenuOpen ? 'text-golf-900 text-xs md:text-sm' : 'text-white text-base md:text-xl'}`}>
               golfbooking.sg
             </div>
           </Link>
@@ -63,33 +87,66 @@ const Navbar: React.FC = () => {
           {/* Right Side: Navigation & Hamburger */}
           <div className="flex items-center gap-4 md:gap-10">
             {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex space-x-10 items-center">
-              {navItems.map((item) => (
-                <button
-                  key={item}
-                  onClick={() => scrollTo(item.toLowerCase())}
-                  className={`text-xs font-black uppercase tracking-widest hover:text-gold-500 transition-colors whitespace-nowrap ${scrolled ? 'text-stone-700' : 'text-stone-100'}`}
+            <div className="hidden lg:flex space-x-7 items-center">
+              {navLinks.map((item) => (
+                <div 
+                  key={item.label} 
+                  className="relative h-full py-4"
+                  onMouseEnter={() => item.dropdown && handleMouseEnter(item.label)}
+                  onMouseLeave={handleMouseLeave}
                 >
-                  {item}
-                </button>
+                  {item.path?.startsWith('#') ? (
+                    <button
+                      onClick={item.label === 'Contact Us' ? scrollToFooter : undefined}
+                      className={`text-[10px] font-black uppercase tracking-widest hover:text-gold-500 transition-colors whitespace-nowrap flex items-center gap-1 ${scrolled ? 'text-stone-700' : 'text-stone-100'}`}
+                    >
+                      {item.label}
+                    </button>
+                  ) : (
+                    <Link
+                      to={item.path || '#'}
+                      className={`text-[10px] font-black uppercase tracking-widest hover:text-gold-500 transition-colors whitespace-nowrap flex items-center gap-1 ${scrolled ? 'text-stone-700' : 'text-stone-100'}`}
+                    >
+                      {item.label}
+                      {item.dropdown && (
+                        <svg className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === item.label ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      )}
+                    </Link>
+                  )}
+
+                  {/* Dropdown Menu */}
+                  {item.dropdown && activeDropdown === item.label && (
+                    <div className="absolute top-full left-0 w-52 bg-white shadow-2xl border border-stone-100 py-2.5 animate-fade-in">
+                      {item.dropdown.map((subItem) => (
+                        <Link
+                          key={subItem.label}
+                          to={subItem.path}
+                          className="block px-6 py-2.5 text-[9px] font-black uppercase tracking-widest text-stone-600 hover:text-gold-500 hover:bg-stone-50 transition-all border-l-4 border-transparent hover:border-gold-500"
+                        >
+                          {subItem.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
 
-            <div className="h-6 w-px bg-stone-200/20 hidden lg:block"></div>
+            <div className="h-5 w-px bg-stone-200/20 hidden lg:block"></div>
 
-            {/* Main CTA: Enquire Button - Desktop */}
+            {/* Main CTA: Enquire Button */}
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className={`hidden md:flex items-center gap-2 px-6 md:px-8 py-3 rounded-none text-[10px] md:text-xs font-black uppercase tracking-[0.2em] transition-all duration-500 shadow-xl hover:-translate-y-0.5 ${
+              className={`hidden md:flex items-center gap-2 px-5 md:px-7 py-2.5 rounded-none text-[9px] md:text-xs font-black uppercase tracking-[0.2em] transition-all duration-500 shadow-xl hover:-translate-y-0.5 ${
                 scrolled 
                   ? 'bg-golf-800 text-white hover:bg-golf-900 shadow-golf-900/10' 
                   : 'bg-white/10 backdrop-blur-md border border-white/30 text-white hover:bg-white/20'
               }`}
             >
               Enquire
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
@@ -100,10 +157,10 @@ const Navbar: React.FC = () => {
               className={`lg:hidden p-2 focus:outline-none transition-colors duration-300 ${scrolled || isMenuOpen ? 'text-golf-900' : 'text-white'}`}
               aria-label="Toggle Menu"
             >
-              <div className="w-6 h-5 relative flex flex-col justify-between">
-                <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+              <div className="w-5 h-4 relative flex flex-col justify-between">
+                <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
                 <span className={`w-full h-0.5 bg-current transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-                <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2.5' : ''}`}></span>
+                <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
               </div>
             </button>
           </div>
@@ -116,42 +173,66 @@ const Navbar: React.FC = () => {
           isMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-full'
         }`}
       >
-        <div className="flex flex-col h-full pt-32 pb-10 px-6 overflow-y-auto">
-          <div className="flex flex-col space-y-4">
-            {navItems.map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollTo(item.toLowerCase())}
-                className="text-sm font-black text-golf-900 uppercase tracking-[0.3em] text-left border-b border-stone-50 pb-5"
-              >
-                {item}
-              </button>
+        <div className="flex flex-col h-full pt-28 pb-10 px-6 overflow-y-auto">
+          <div className="flex flex-col space-y-1">
+            {navLinks.map((item) => (
+              <div key={item.label} className="border-b border-stone-50 pb-3 mb-1">
+                <div className="flex items-center justify-between py-2">
+                  {item.path?.startsWith('#') ? (
+                    <button 
+                      onClick={item.label === 'Contact Us' ? scrollToFooter : undefined}
+                      className="text-xs font-black text-golf-900 uppercase tracking-[0.3em] text-left"
+                    >
+                      {item.label}
+                    </button>
+                  ) : (
+                    <Link
+                      to={item.path || '#'}
+                      className="text-xs font-black text-golf-900 uppercase tracking-[0.3em] text-left"
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                  {item.dropdown && (
+                    <button onClick={() => setActiveDropdown(activeDropdown === item.label ? null : item.label)} className="p-2">
+                      <svg className={`w-4 h-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </button>
+                  )}
+                </div>
+                {item.dropdown && activeDropdown === item.label && (
+                  <div className="pl-4 mt-1 space-y-3 animate-fade-in">
+                    {item.dropdown.map((sub) => (
+                      <Link 
+                        key={sub.label} 
+                        to={sub.path} 
+                        className="block text-[10px] font-bold text-stone-500 uppercase tracking-widest py-1 border-l-2 border-gold-500 pl-4"
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
 
-          <div className="mt-auto space-y-6">
-            <p className="text-[10px] font-black text-stone-400 uppercase tracking-[0.4em]">Let's Connect</p>
+          <div className="mt-auto space-y-5">
+            <p className="text-[9px] font-black text-stone-400 uppercase tracking-[0.4em]">Let's Connect</p>
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 w-full bg-golf-800 text-white py-6 rounded-none text-xs font-black uppercase tracking-[0.2em] shadow-xl active:scale-95 transition-all"
+              className="flex items-center justify-center gap-3 w-full bg-golf-800 text-white py-5 rounded-none text-[10px] font-black uppercase tracking-[0.2em] shadow-xl active:scale-95 transition-all"
             >
               Start Enquiry
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
-            
-            <div className="flex flex-col space-y-2 text-stone-500 text-[10px] font-black uppercase tracking-widest">
-              <a href="mailto:enquiry@golfbooking.sg">enquiry@golfbooking.sg</a>
-              <a href="tel:+6591682061">+65 9168 2061</a>
-            </div>
           </div>
         </div>
       </div>
 
-      {/* Background Dimmer when menu open */}
       {isMenuOpen && (
         <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[50] lg:hidden animate-fade-in" onClick={() => setIsMenuOpen(false)}></div>
       )}

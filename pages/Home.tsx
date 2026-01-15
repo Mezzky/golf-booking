@@ -2,20 +2,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SectionContainer from '../components/SectionContainer';
 import { TOURS, SERVICES, DESTINATIONS, TESTIMONIALS, IMAGES } from '../data';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const [testiActiveIndex, setTestiActiveIndex] = useState(0);
   const parallaxRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const testiCarouselRef = useRef<HTMLDivElement>(null);
   
+  // Search Form State
+  const [searchDest, setSearchDest] = useState("");
+  const [searchType, setSearchType] = useState("");
+  const [searchMonth, setSearchMonth] = useState("");
+
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
   const tourList = Object.values(TOURS);
   const tripledTours = [...tourList, ...tourList, ...tourList];
   const numRealTours = tourList.length;
 
-  // For testimonials
   const tripleTestimonials = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
   const numRealTestis = TESTIMONIALS.length;
 
@@ -30,69 +40,49 @@ const Home: React.FC = () => {
         el.scrollLeft = el.scrollWidth / 3;
       }
     }, 100);
-
-    return () => {
-      clearTimeout(timer);
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   const handleCarouselScroll = () => {
     const el = carouselRef.current;
     if (!el) return;
-
     const { scrollLeft, scrollWidth, offsetWidth } = el;
     const third = scrollWidth / 3;
-
     if (scrollLeft < 50) {
       el.scrollLeft = scrollLeft + third;
     } else if (scrollLeft > (third * 2) + 50) {
       el.scrollLeft = scrollLeft - third;
     }
-
     const cardWidthWithGap = 364;
     const currentCenterIndex = Math.round((scrollLeft + offsetWidth / 2 - cardWidthWithGap / 2) / cardWidthWithGap);
     const normalizedIndex = (currentCenterIndex % numRealTours + numRealTours) % numRealTours;
-    
-    if (normalizedIndex !== activeIndex) {
-      setActiveIndex(normalizedIndex);
-    }
+    if (normalizedIndex !== activeIndex) setActiveIndex(normalizedIndex);
   };
 
   const handleTestiScroll = () => {
     const el = testiCarouselRef.current;
     if (!el) return;
-
     const { scrollLeft, scrollWidth, offsetWidth } = el;
     const third = scrollWidth / 3;
-
     if (scrollLeft < 50) {
       el.scrollLeft = scrollLeft + third;
     } else if (scrollLeft > (third * 2) + 50) {
       el.scrollLeft = scrollLeft - third;
     }
-
-    const cardWidthWithGap = 400; // Adjusted for testimonial width
+    const cardWidthWithGap = 400;
     const currentCenterIndex = Math.round((scrollLeft + offsetWidth / 2 - cardWidthWithGap / 2) / cardWidthWithGap);
     const normalizedIndex = (currentCenterIndex % numRealTestis + numRealTestis) % numRealTestis;
-    
-    if (normalizedIndex !== testiActiveIndex) {
-      setTestiActiveIndex(normalizedIndex);
-    }
+    if (normalizedIndex !== testiActiveIndex) setTestiActiveIndex(normalizedIndex);
   };
 
   const scrollCarousel = (ref: React.RefObject<HTMLDivElement>, direction: 'left' | 'right', step: number = 364) => {
     const el = ref.current;
     if (!el) return;
-
     const moveAmount = direction === 'left' ? -step : step;
-    el.scrollBy({
-      left: moveAmount,
-      behavior: 'smooth'
-    });
+    el.scrollBy({ left: moveAmount, behavior: 'smooth' });
   };
 
   const [parallaxY, setParallaxY] = useState(0);
-
   useEffect(() => {
     const onScroll = () => {
       if (!parallaxRef.current) return;
@@ -107,36 +97,114 @@ const Home: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const section = document.getElementById('tours');
+    section?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="flex flex-col w-full overflow-hidden">
-      {/* 1. Brand Hero */}
-      <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
+      {/* 1. Brand Hero Section */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 scale-105"
-          style={{ backgroundImage: `url(${IMAGES.heroLanding})` }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 scale-100 transition-transform duration-[6000ms] hover:scale-110"
+          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1595113316349-9fa4eb24f884?auto=format&fit=crop&q=80&w=2500')` }}
         >
-          {/* Lighter Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent" />
+          {/* Brand Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/70" />
         </div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full text-white">
-          <div className="max-w-3xl text-left">
-            <h1 className="text-5xl md:text-8xl font-extrabold mb-8 leading-[1.1] tracking-tight text-white drop-shadow-sm">
-              One-Stop <br/>
-              <span className="text-gold-400">Golf Excellence</span>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full text-white flex flex-col items-center">
+          <div className="text-center animate-fade-in mb-12 md:mb-16">
+            <span className="inline-block text-[10px] md:text-xs font-black uppercase tracking-[0.5em] text-gold-500 mb-6 animate-fade-in-up">Elite Golf Experiences</span>
+            <h1 className="text-5xl md:text-8xl font-black mb-6 tracking-tighter uppercase italic leading-[0.95] max-w-6xl">
+              Excellence <br className="hidden md:block"/> 
+              <span className="not-italic text-white/90">In Every Swing</span>
             </h1>
-            <p className="text-xl md:text-2xl text-stone-200 mb-12 font-medium max-w-xl leading-relaxed">
-              Enabling you to play golf with absolute ease. From curated tours to professional handicap maintenance.
-            </p>
-            <div className="flex flex-row gap-3 md:gap-5">
-              <a href="#about" className="flex-1 md:flex-none text-center px-4 py-3 md:px-10 md:py-5 bg-golf-500 hover:bg-gold-600 text-white font-bold rounded-none transition-all shadow-xl hover:-translate-y-1 uppercase tracking-widest text-[10px] md:text-sm whitespace-nowrap">
-                About Us
-              </a>
-              <a href="#tours" className="flex-1 md:flex-none text-center px-4 py-3 md:px-10 md:py-5 bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/30 text-white font-bold rounded-none transition-all uppercase tracking-widest text-[10px] md:text-sm whitespace-nowrap">
-                View Packages
-              </a>
-            </div>
           </div>
+
+          {/* Compact Integrated Search Bar */}
+          <div className="w-full max-w-4xl animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+            <form 
+              onSubmit={handleSearch}
+              className="bg-white rounded-none shadow-[0_40px_100px_-15px_rgba(0,0,0,0.5)] flex flex-col md:flex-row items-stretch"
+            >
+              {/* Destination */}
+              <div className="flex-1 flex flex-col px-6 py-5 border-b md:border-b-0 md:border-r border-stone-100 group transition-all hover:bg-stone-50 relative">
+                <label className="text-[8px] font-black uppercase tracking-[0.3em] text-stone-400 mb-1 group-hover:text-gold-500 transition-colors">Destination</label>
+                <div className="relative flex items-center">
+                  <select 
+                    value={searchDest}
+                    onChange={(e) => setSearchDest(e.target.value)}
+                    className="w-full bg-transparent text-stone-900 font-bold focus:outline-none appearance-none cursor-pointer text-xs md:text-sm z-10"
+                  >
+                    <option value="">Any Region</option>
+                    {DESTINATIONS.map(d => <option key={d.country} value={d.country}>{d.country}</option>)}
+                  </select>
+                  <svg className="absolute right-0 w-3 h-3 text-stone-400 pointer-events-none group-hover:text-gold-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Travel Type */}
+              <div className="flex-1 flex flex-col px-6 py-5 border-b md:border-b-0 md:border-r border-stone-100 group transition-all hover:bg-stone-50 relative">
+                <label className="text-[8px] font-black uppercase tracking-[0.3em] text-stone-400 mb-1 group-hover:text-gold-500 transition-colors">Travel Type</label>
+                <div className="relative flex items-center">
+                  <select 
+                    value={searchType}
+                    onChange={(e) => setSearchType(e.target.value)}
+                    className="w-full bg-transparent text-stone-900 font-bold focus:outline-none appearance-none cursor-pointer text-xs md:text-sm z-10"
+                  >
+                    <option value="">Any Type</option>
+                    <option value="travel">Golf Travel</option>
+                    <option value="stay">Stay & Play</option>
+                  </select>
+                  <svg className="absolute right-0 w-3 h-3 text-stone-400 pointer-events-none group-hover:text-gold-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Month Dropdown */}
+              <div className="flex-1 flex flex-col px-6 py-5 border-b md:border-b-0 md:border-r border-stone-100 group transition-all hover:bg-stone-50 relative">
+                <label className="text-[8px] font-black uppercase tracking-[0.3em] text-stone-400 mb-1 group-hover:text-gold-500 transition-colors">Month</label>
+                <div className="relative flex items-center">
+                  <select 
+                    value={searchMonth}
+                    onChange={(e) => setSearchMonth(e.target.value)}
+                    className="w-full bg-transparent text-stone-900 font-bold focus:outline-none appearance-none cursor-pointer text-xs md:text-sm z-10"
+                  >
+                    <option value="">Any Month</option>
+                    {months.map((m, idx) => (
+                      <option key={idx} value={m}>{m} 2026</option>
+                    ))}
+                  </select>
+                  <svg className="absolute right-0 w-3 h-3 text-stone-400 pointer-events-none group-hover:text-gold-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Action Button */}
+              <button 
+                type="submit"
+                className="bg-golf-800 hover:bg-golf-950 text-white font-black uppercase tracking-[0.2em] px-10 py-6 md:py-0 transition-all duration-500 text-[10px] md:text-xs whitespace-nowrap active:scale-[0.98] flex items-center justify-center gap-3"
+              >
+                Find Tours
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-40">
+           <span className="text-[8px] font-black text-white uppercase tracking-[0.5em]">Explore</span>
+           <div className="w-px h-16 bg-white/50 animate-pulse"></div>
         </div>
       </section>
 
@@ -162,7 +230,7 @@ const Home: React.FC = () => {
       <section id="about" className="bg-stone-50 py-8 md:py-16 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 md:mb-24">
-            <h2 className="text-stone-500 text-2xl font-medium mb-1 uppercase tracking-widest">Welcome to</h2>
+            <h2 className="text-gold-500 text-2xl font-medium mb-1 uppercase tracking-widest">Welcome to</h2>
             <h3 className="text-5xl md:text-7xl font-black text-stone-900 italic tracking-tight mb-8">Golfbooking.sg</h3>
             <p className="text-stone-700 text-sm md:text-base leading-relaxed max-w-4xl mx-auto font-medium opacity-80 uppercase tracking-widest px-4">
               Singapore's premier one-stop golf service provider. We are dedicated to delivering a seamless experience across the Mediterranean, 
@@ -203,7 +271,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Core Services Grid - Stacked on Tablet (md) */}
+      {/* 4. Core Services Grid */}
       <SectionContainer id="services" className="bg-white">
         <div className="text-center mb-12 md:mb-20">
           <h2 className="text-4xl md:text-5xl font-black text-golf-900 mb-6 tracking-tight">How We Serve You</h2>
@@ -328,7 +396,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. Destination Highlights - CLEAR IMAGES BENTO GRID */}
+      {/* 6. Destination Highlights */}
       <div className="bg-golf-950 py-8 md:py-16 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-golf-800/20 rounded-none blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
         
@@ -453,7 +521,7 @@ const Home: React.FC = () => {
         </div>
       </SectionContainer>
 
-      {/* 8. Social Proof - CAROUSEL VERSION */}
+      {/* 8. Social Proof */}
       <div className="bg-stone-50 py-8 md:py-16 border-y border-stone-200 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-10">
           <div className="max-w-2xl">
@@ -505,7 +573,6 @@ const Home: React.FC = () => {
           ))}
         </div>
 
-        {/* Testimonial pagination dots */}
         <div className="flex justify-center items-center gap-3">
           {TESTIMONIALS.map((_, idx) => (
             <div
@@ -520,7 +587,7 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      {/* 10. Final CTA - REDESIGNED PER MOCKUP */}
+      {/* 10. Final CTA */}
       <section className="relative h-[80vh] min-h-[600px] flex items-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center z-0 scale-105"
