@@ -19,6 +19,15 @@ html {
   background: #263e1a;
 }
 
+/* Hide scrollbar utility */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Animation utilities */
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -34,6 +43,23 @@ html {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Cinematic Hero Zoom Animation */
+@keyframes heroLinearZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+/* Subtle Floating Animation */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-hero-zoom {
+  animation: heroLinearZoom 3s linear forwards;
 }
 
 .animate-fade-in {

@@ -50,6 +50,10 @@ export interface TourData {
   golfLabel: string;
   transportLabel: string;
   transportTitle?: string;
+  category: string; // New field
+  location: string; // New field
+  departureDate: string; // New field
+  priceFrom: string; // New field
   stats?: TourStat[];
   highlights: HighlightItem[];
   itinerary: ItineraryItem[];

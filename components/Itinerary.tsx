@@ -44,33 +44,33 @@ const Itinerary: React.FC<ItineraryProps> = ({ itinerary }) => {
           </div>
           <button 
             onClick={handleToggleAll}
-            className="text-[10px] font-black uppercase tracking-[0.2em] text-golf-600 hover:text-golf-800 transition-colors border border-stone-200 px-6 py-3 rounded-none bg-white shadow-sm"
+            className="text-[10px] font-black uppercase tracking-[0.2em] text-golf-600 hover:text-white hover:bg-golf-600 transition-all border border-stone-200 px-6 py-3 rounded-lg bg-white shadow-sm"
           >
             {allExpanded ? 'Collapse All' : 'Expand All'}
           </button>
         </div>
 
         {/* Itinerary Accordion List */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           {itinerary.map((item, index) => {
             const isExpanded = expandedDays.has(index);
             
             return (
               <div 
                 key={index} 
-                className={`bg-white border transition-all duration-500 overflow-hidden rounded-none ${
-                  isExpanded ? 'border-stone-300 shadow-xl' : 'border-stone-200 hover:border-stone-300'
+                className={`bg-white border transition-all duration-500 overflow-hidden rounded-2xl ${
+                  isExpanded ? 'border-stone-300 shadow-xl' : 'border-stone-200 hover:border-stone-300 shadow-sm'
                 }`}
               >
                 {/* Accordion Trigger Header */}
                 <button 
-                  className="w-full flex items-center justify-between p-6 md:p-8 text-left focus:outline-none group rounded-none"
+                  className="w-full flex items-center justify-between p-6 md:p-8 text-left focus:outline-none group"
                   onClick={() => toggleDay(index)}
                 >
                   <div className="flex items-center gap-6 md:gap-10">
-                    <div className="flex flex-col items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-stone-50 border border-stone-200 rounded-none group-hover:bg-golf-50 transition-colors">
+                    <div className="flex flex-col items-center justify-center w-14 h-14 md:w-20 md:h-20 bg-stone-50 border border-stone-200 rounded-xl group-hover:bg-golf-50 transition-colors">
                       <span className="text-[8px] font-black text-stone-400 uppercase tracking-widest mb-0.5">DAY</span>
-                      <span className="text-xl md:text-2xl font-black text-golf-900">{(index + 1).toString().padStart(2, '0')}</span>
+                      <span className="text-xl md:text-3xl font-black text-golf-900">{(index + 1).toString().padStart(2, '0')}</span>
                     </div>
                     <div>
                       <div className="flex items-center gap-3 mb-1">
@@ -78,11 +78,11 @@ const Itinerary: React.FC<ItineraryProps> = ({ itinerary }) => {
                         <span className="text-stone-300 font-light text-[10px]">|</span>
                         <span className="text-[10px] font-bold text-stone-400">{item.date}</span>
                       </div>
-                      <h4 className="text-lg md:text-2xl font-black text-stone-900 italic tracking-tight">{item.title}</h4>
+                      <h4 className="text-xl md:text-3xl font-black text-stone-900 tracking-tight leading-tight">{item.title}</h4>
                     </div>
                   </div>
                   
-                  <div className={`w-10 h-10 rounded-none border border-stone-100 flex items-center justify-center transition-transform duration-500 ${isExpanded ? 'rotate-180 bg-stone-50' : 'bg-white'}`}>
+                  <div className={`w-10 h-10 rounded-full border border-stone-100 flex items-center justify-center transition-transform duration-500 ${isExpanded ? 'rotate-180 bg-stone-50' : 'bg-white'}`}>
                     <svg className="w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path d="M19 9l-7 7-7-7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
@@ -98,8 +98,8 @@ const Itinerary: React.FC<ItineraryProps> = ({ itinerary }) => {
                   <div className="p-6 md:p-12 lg:p-16">
                     <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
                       {/* Image on the Left */}
-                      <div className="relative group/img overflow-hidden rounded-none">
-                        <div className="aspect-[16/10] overflow-hidden bg-stone-100 rounded-none">
+                      <div className="relative group/img overflow-hidden rounded-xl shadow-lg">
+                        <div className="aspect-[16/10] overflow-hidden bg-stone-100">
                           <img 
                             src={item.image} 
                             alt={item.title} 
@@ -108,7 +108,7 @@ const Itinerary: React.FC<ItineraryProps> = ({ itinerary }) => {
                         </div>
                         {item.highlight && (
                           <div className="absolute top-6 left-6">
-                            <span className="bg-white/95 backdrop-blur-md text-stone-900 text-[9px] font-black px-4 py-2 rounded-none shadow-xl tracking-widest uppercase border border-stone-100">
+                            <span className="bg-white/95 backdrop-blur-md text-stone-900 text-[9px] font-black px-4 py-2 rounded-lg shadow-xl tracking-widest uppercase border border-stone-100">
                               {item.highlight}
                             </span>
                           </div>
@@ -121,9 +121,7 @@ const Itinerary: React.FC<ItineraryProps> = ({ itinerary }) => {
                         <ul className="space-y-6">
                           {item.activities.map((activity, i) => (
                             <li key={i} className="flex items-start gap-5 group/item">
-                              <div className="mt-1.5 w-6 h-6 rounded-none bg-stone-50 border border-stone-200 flex items-center justify-center flex-shrink-0 group-hover/item:bg-golf-500 group-hover/item:border-golf-500 transition-all duration-300">
-                                <div className="w-1 h-1 rounded-none bg-stone-300 group-hover/item:bg-white" />
-                              </div>
+                              <div className="mt-2 w-3 h-3 rounded-full bg-golf-500 flex-shrink-0" />
                               <p className="text-stone-700 leading-relaxed font-medium text-base md:text-lg opacity-90 group-hover/item:opacity-100 transition-opacity">
                                 {activity}
                               </p>
@@ -132,7 +130,7 @@ const Itinerary: React.FC<ItineraryProps> = ({ itinerary }) => {
                         </ul>
 
                         {item.flightNote && item.flightNote.length > 0 && (
-                          <div className="mt-12 p-8 bg-stone-50 border border-stone-100 rounded-none">
+                          <div className="mt-12 p-8 bg-stone-50 border border-stone-100 rounded-xl">
                             <div className="flex items-center gap-3 mb-4">
                               <svg className="w-4 h-4 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>
                               <span className="text-[9px] font-black uppercase tracking-[0.2em] text-stone-500">Logistics Note</span>
@@ -158,7 +156,7 @@ const Itinerary: React.FC<ItineraryProps> = ({ itinerary }) => {
         {/* Disclaimer Footer */}
         <div className="mt-20 pt-10 border-t border-stone-200 text-center">
           <p className="text-[10px] text-stone-400 font-bold uppercase tracking-[0.2em] mb-4">Itinerary Management</p>
-          <p className="text-[11px] text-stone-400 max-w-2xl mx-auto leading-relaxed uppercase tracking-widest font-medium italic">
+          <p className="text-[11px] text-stone-400 max-w-2xl mx-auto leading-relaxed uppercase tracking-widest font-medium">
             *Sequence may be adjusted based on local conditions, tee times, or operational necessities to ensure the best possible experience for our guests.
           </p>
         </div>

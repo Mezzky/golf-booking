@@ -48,8 +48,8 @@ const Navbar: React.FC = () => {
     {
       label: 'Services',
       dropdown: [
-        { label: 'HMS', path: '/#hms' },
         { label: 'Tee Time Booking', path: '/#services' },
+        { label: 'Handicap Maintenance', path: '/#services' },
         { label: 'Golf Transport', path: '/#services' }
       ]
     },

@@ -19,7 +19,7 @@ export const SERVICES: ServiceItem[] = [
     title: "Tee Time Booking",
     description: "Instant access to premier golf courses with exclusive rates and seamless booking.",
     icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>,
-    tag: "Instant Confirm"
+    tag: "Priority Access"
   },
   {
     title: "Handicap Maintenance",
@@ -69,7 +69,10 @@ export const TOURS: Record<string, TourData> = {
     durationLabel: "5D4N",
     golfLabel: "4 Rounds (18H)",
     transportLabel: "Luxury Coach",
-    transportTitle: "Transport",
+    category: "Golf Travel",
+    location: "Kuala Lumpur, Malaysia",
+    departureDate: "19 JAN 2026",
+    priceFrom: "1,178",
     stats: [
       { label: "Duration", value: "5D4N" },
       { label: "Golf", value: "4 Rounds (18H)" },
@@ -222,7 +225,10 @@ export const TOURS: Record<string, TourData> = {
     durationLabel: "8D7N",
     golfLabel: "4 Rounds (18H)",
     transportLabel: "Golf Course Only",
-    transportTitle: "Transfers",
+    category: "Both",
+    location: "Belek, Türkiye",
+    departureDate: "22 OCT 2026",
+    priceFrom: "3,500",
     stats: [
       { label: "Duration", value: "8D7N" },
       { label: "Golf", value: "4 Rounds (18H)" },
@@ -389,68 +395,177 @@ export const TOURS: Record<string, TourData> = {
       }
     ]
   },
-  chiangmai: {
-    id: 'chiangmai',
-    name: "Chiang Mai Lanna Golf & Heritage",
-    shortName: "Chiang Mai Lanna",
-    dates: "12 - 18 May 2026",
-    heroImage: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=2000",
-    durationLabel: "7D6N",
-    golfLabel: "3 Rounds (18H)",
-    transportLabel: "Private Van",
-    highlights: [{ title: "Lanna Style", description: "Experience Northern Thai culture.", icon: null }],
-    itinerary: [],
-    accommodation: [],
-    pricing: { twin: "SGD 1,450", single: "SGD 1,850", note: "", registrationLink: "" },
-    inclusions: [],
-    exclusions: []
-  },
   bali: {
     id: 'bali',
     name: "Bali Island Greens & Shores",
-    shortName: "Bali Greens",
+    shortName: "Bali Island Greens",
     dates: "05 - 11 June 2026",
-    heroImage: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&q=80&w=2000",
+    heroImage: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/423248468.jpg?k=08a4cf7df406c7bc30557cb496f3c32d9efefbf6fa242dc56e27dd8b6f8fb441&o=",
+    badgeText: "ISLAND GETAWAY",
     durationLabel: "7D6N",
     golfLabel: "3 Rounds (18H)",
     transportLabel: "Private Driver",
-    highlights: [{ title: "Island Paradise", description: "Golf with ocean views.", icon: null }],
+    category: "Stay & Play",
+    location: "Bali, Indonesia",
+    departureDate: "05 JUN 2026",
+    priceFrom: "1,680",
+    stats: [
+      { label: "Duration", value: "7D6N" },
+      { label: "Golf", value: "3 Rounds" },
+      { label: "Transport", value: "Private Driver" }
+    ],
+    highlights: [
+      { title: "Ocean Fairways", description: "Tee off with panoramic Indian Ocean views.", icon: <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeWidth="2"/></svg> },
+      { title: "Beachside Luxury", description: "5-star accommodation in Nusa Dua.", icon: <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" strokeWidth="2"/></svg> }
+    ],
     itinerary: [],
-    accommodation: [],
+    accommodation: [
+      { name: "The Mulia Resort", location: "Nusa Dua", features: ["Infinity Pools", "Private Beach Access"], image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=800" }
+    ],
     pricing: { twin: "SGD 1,680", single: "SGD 2,100", note: "", registrationLink: "" },
-    inclusions: [],
-    exclusions: []
+    inclusions: ["Round-trip Airport Transfers", "Green Fees & Caddy"],
+    exclusions: ["Air Tickets", "Personal Expenses"]
   },
   danang: {
     id: 'danang',
     name: "Da Nang Coastal Fairways 2026",
     shortName: "Da Nang Coastal",
     dates: "14 - 20 September 2026",
-    heroImage: "https://cdn.sanity.io/images/iqsqxgxl/production/dc64dd225a660816790223419394df185aaa48fa-1920x1438.jpg",
+    heroImage: "https://images.ctfassets.net/pg9ls4pr74b0/4W70Uy6AMYdcIxKBp0TeF5/aa7496cbfa0e1e87ba7f5ce62e4f1fe9/FLC_Ha_Long_Bay_Golf_Club__Hanoi.jpg",
+    badgeText: "COASTAL LUXURY",
     durationLabel: "7D6N",
     golfLabel: "4 Rounds (18H)",
     transportLabel: "Private Transfers",
-    highlights: [{ title: "Links Courses", description: "Play on the finest coastal layouts.", icon: null }],
+    category: "Golf Travel",
+    location: "Da Nang, Vietnam",
+    departureDate: "14 SEP 2026",
+    priceFrom: "1,890",
+    stats: [
+      { label: "Duration", value: "7D6N" },
+      { label: "Golf", value: "4 Rounds" },
+      { label: "Transport", value: "VIP Van" }
+    ],
+    highlights: [
+      { title: "Links Mastery", description: "Play courses designed by Nicklaus and Norman.", icon: null }
+    ],
     itinerary: [],
     accommodation: [],
     pricing: { twin: "SGD 1,890", single: "SGD 2,350", note: "", registrationLink: "" },
+    inclusions: ["VIP Meet & Greet", "All Green Fees"],
+    exclusions: []
+  },
+  langkawi: {
+    id: 'langkawi',
+    name: "Langkawi Tropical Golf Escape",
+    shortName: "Langkawi Tropical",
+    dates: "12 - 16 March 2026",
+    heroImage: "https://images.ctfassets.net/pg9ls4pr74b0/37FMFddAEdWL14kiFUBc40/40d096cd6822bda87c51736a5215423c/TPC_Kuala_Lumpur__Malaysia.jpg",
+    badgeText: "NATURE RETREAT",
+    durationLabel: "5D4N",
+    golfLabel: "3 Rounds (18H)",
+    transportLabel: "Private Driver",
+    category: "Stay & Play",
+    location: "Langkawi, Malaysia",
+    departureDate: "12 MAR 2026",
+    priceFrom: "1,250",
+    stats: [
+      { label: "Duration", value: "5D4N" },
+      { label: "Golf", value: "3 Rounds" },
+      { label: "Transport", value: "SUV" }
+    ],
+    highlights: [
+      { title: "Rainforest Golf", description: "The Els Club Teluk Datai experience.", icon: null }
+    ],
+    itinerary: [],
+    accommodation: [
+      { name: "The Datai Langkawi", location: "Teluk Datai", features: ["Lush Jungle Surroundings", "Award-winning Spa"], image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800" }
+    ],
+    pricing: { twin: "SGD 1,250", single: "SGD 1,600", note: "", registrationLink: "" },
+    inclusions: ["3 Rounds of Golf", "Breakfast Daily"],
+    exclusions: []
+  },
+  phuket: {
+    id: 'phuket',
+    name: "Phuket Island Masters 2026",
+    shortName: "Phuket Masters",
+    dates: "10 - 15 November 2026",
+    heroImage: "https://www.phuketgolfholidays.com/img/slides/slide_3.jpg",
+    badgeText: "CHAMPIONSHIP TOUR",
+    durationLabel: "6D5N",
+    golfLabel: "4 Rounds (18H)",
+    transportLabel: "Private Transfers",
+    category: "Golf Travel",
+    location: "Phuket, Thailand",
+    departureDate: "10 NOV 2026",
+    priceFrom: "1,450",
+    stats: [
+      { label: "Duration", value: "6D5N" },
+      { label: "Golf", value: "4 Rounds" },
+      { label: "Transport", value: "VIP Van" }
+    ],
+    highlights: [
+      { title: "Red Mountain", description: "One of Asia's most challenging courses.", icon: null }
+    ],
+    itinerary: [],
+    accommodation: [],
+    pricing: { twin: "SGD 1,450", single: "SGD 1,850", note: "", registrationLink: "" },
     inclusions: [],
     exclusions: []
   },
-  perth: {
-    id: 'perth',
-    name: "Perth West Coast Golf Adventure",
-    shortName: "Perth West Coast",
-    dates: "02 - 09 November 2026",
-    heroImage: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&q=80&w=2000",
-    durationLabel: "8D7N",
-    golfLabel: "4 Rounds (18H)",
-    transportLabel: "SUV Rental",
-    highlights: [{ title: "Swan River", description: "Iconic Australian golfing scenery.", icon: null }],
+  chiangmai: {
+    id: 'chiangmai',
+    name: "Chiang Mai Highlands Retreat",
+    shortName: "Chiang Mai Highland",
+    dates: "01 - 06 February 2026",
+    heroImage: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/363953990.jpg?k=b2a8dedc0365b9f7104dab21fc06446006049e5c01b6c665df938ae5695b41e9&o=",
+    badgeText: "COOL CLIMATE",
+    durationLabel: "6D5N",
+    golfLabel: "3 Rounds (18H)",
+    transportLabel: "Luxury MPV",
+    category: "Both",
+    location: "Chiang Mai, Thailand",
+    departureDate: "01 FEB 2026",
+    priceFrom: "1,120",
+    stats: [
+      { label: "Duration", value: "6D5N" },
+      { label: "Golf", value: "3 Rounds" },
+      { label: "Climate", value: "Cool Highlands" }
+    ],
+    highlights: [
+      { title: "Mountain Vistas", description: "Scenic mountain-top golf courses.", icon: null }
+    ],
     itinerary: [],
     accommodation: [],
-    pricing: { twin: "SGD 2,450", single: "SGD 3,100", note: "", registrationLink: "" },
+    pricing: { twin: "SGD 1,120", single: "SGD 1,480", note: "", registrationLink: "" },
     inclusions: [],
+    exclusions: []
+  },
+  bintan: {
+    id: 'bintan',
+    name: "Bintan Lagoon Weekend Getaway",
+    shortName: "Bintan Getaway",
+    dates: "Weekends Only",
+    heroImage: "https://www.riabintan.com/wp-content/uploads/2021/04/Holes-1-Forest-Ocean-Aerial.jpg",
+    badgeText: "WEEKEND SPECIAL",
+    durationLabel: "3D2N",
+    golfLabel: "2 Rounds (18H)",
+    transportLabel: "Ferry & Private Car",
+    category: "Stay & Play",
+    location: "Bintan, Indonesia",
+    departureDate: "Any Friday",
+    priceFrom: "650",
+    stats: [
+      { label: "Duration", value: "3D2N" },
+      { label: "Golf", value: "2 Rounds" },
+      { label: "Ferry", value: "Eco-Friendly" }
+    ],
+    highlights: [
+      { title: "Quick Escape", description: "Just a ferry ride away from Singapore.", icon: null }
+    ],
+    itinerary: [],
+    accommodation: [],
+    pricing: { twin: "SGD 650", single: "SGD 850", note: "", registrationLink: "" },
+    inclusions: ["Ferry Tickets", "Golf Fees"],
     exclusions: []
   }
 };

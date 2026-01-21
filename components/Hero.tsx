@@ -33,12 +33,12 @@ const Hero: React.FC<HeroProps> = ({ tour }) => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 scale-105 transition-all duration-1000 animate-fade-in"
         style={{ backgroundImage: `url(${tour.heroImage})` }}
       >
-        {/* Lighter overlay for Tour pages */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/30" />
+        {/* INCREASED INTENSITY GOLF OVERLAY */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80" />
       </div>
 
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-        <div className="inline-block mb-6 px-4 py-2 border-2 rounded-none text-xs sm:text-sm font-bold tracking-widest uppercase cursor-default neon-blink bg-black/20 backdrop-blur-sm">
+        <div className="inline-block mb-6 px-4 py-2 border-2 rounded-lg text-xs sm:text-sm font-bold tracking-widest uppercase cursor-default neon-blink bg-black/20 backdrop-blur-sm">
           {tour.badgeText || 'CHINESE NEW YEAR SPECIAL'}
         </div>
         
@@ -51,12 +51,12 @@ const Hero: React.FC<HeroProps> = ({ tour }) => {
           {tour.dates}
         </p>
         
-        {/* KPI Boxes Container - Flexible layout for 4 boxes (3+1) - SHARP */}
+        {/* KPI Boxes Container - Flexible layout for 4 boxes (3+1) - SHARP -> SOFT MODERN */}
         <div className="flex flex-wrap gap-4 justify-center items-center max-w-4xl mx-auto">
             {infoStats.map((stat, idx) => (
               <div 
                 key={idx} 
-                className="w-64 h-24 bg-white/10 backdrop-blur-sm border border-white/20 p-4 rounded-none text-white hover:-translate-y-1 transition-transform duration-300 cursor-default shadow-lg hover:shadow-xl text-center flex flex-col justify-center flex-shrink-0"
+                className="w-64 h-24 bg-white/10 backdrop-blur-sm border border-white/20 p-4 rounded-xl text-white hover:-translate-y-1 transition-transform duration-300 cursor-default shadow-lg hover:shadow-xl text-center flex flex-col justify-center flex-shrink-0"
               >
                   <p className="text-xs uppercase tracking-wider text-gold-400 font-bold mb-1">{stat.label}</p>
                   <p className="font-bold text-lg leading-tight">{stat.value}</p>
