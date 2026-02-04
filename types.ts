@@ -75,10 +75,13 @@ export interface TourData {
 }
 
 export interface ServiceItem {
+  id: string;
   title: string;
   description: string;
+  detailedDescription?: string;
   icon: React.ReactNode;
   tag?: string;
+  image?: string;
 }
 
 export interface DestinationItem {

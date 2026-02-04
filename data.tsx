@@ -16,22 +16,31 @@ export const IMAGES = {
 
 export const SERVICES: ServiceItem[] = [
   {
+    id: "tee-time",
     title: "Tee Time Booking",
     description: "Instant access to premier golf courses with exclusive rates and seamless booking.",
+    detailedDescription: "Leverage our extensive network of elite golf courses. We provide priority access and preferred rates for both individual players and corporate groups, ensuring your spot on the most sought-after fairways.",
     icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>,
-    tag: "Priority Access"
+    tag: "Priority Access",
+    image: "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&q=80&w=1200"
   },
   {
+    id: "handicap",
     title: "Handicap Maintenance",
     description: "Official USGA/SGA handicap indexing and maintenance service for amateur golfers.",
+    detailedDescription: "Stay tournament-ready with our official handicap maintenance services. As a licensed partner, we manage your scoring records and indexing according to international standards, providing you with a certified handicap recognized globally.",
     icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
-    tag: "Official Partner"
+    tag: "Official Partner",
+    image: "https://images.unsplash.com/photo-1593111774240-d529f12cf4bb?auto=format&fit=crop&q=80&w=1200"
   },
   {
+    id: "transport",
     title: "Golf Transport",
     description: "Luxury coach and private transfers tailored specifically for golfers and their gear.",
+    detailedDescription: "Travel in comfort without worrying about your gear. Our specialized fleet features ample storage for golf bags and premium interiors. From private VIP vans to full-sized luxury coaches, we ensure you arrive at the club relaxed and ready for the first tee.",
     icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>,
-    tag: "Premium Fleet"
+    tag: "Premium Fleet",
+    image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=1200"
   }
 ];
 
@@ -40,6 +49,10 @@ export const DESTINATIONS: DestinationItem[] = [
   { country: "Thailand", count: "8+ Packages", image: "https://cdn.sanity.io/images/iqsqxgxl/production/729139609ef7639c763387604f1c319d4e093472-1920x1280.jpg" },
   { country: "Türkiye", count: "4+ Packages", image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&q=80&w=800" },
   { country: "Indonesia", count: "6+ Packages", image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&q=80&w=800" },
+  { country: "Vietnam", count: "10+ Packages", image: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&q=80&w=800" },
+  { country: "Japan", count: "5+ Packages", image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800" },
+  { country: "Philippines", count: "4+ Packages", image: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&q=80&w=800" },
+  { country: "Cambodia", count: "3+ Packages", image: "https://images.unsplash.com/photo-1500043204644-714de6e718bc?auto=format&fit=crop&q=80&w=800" },
 ];
 
 export const TESTIMONIALS: TestimonialItem[] = [

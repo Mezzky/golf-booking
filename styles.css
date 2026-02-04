@@ -58,6 +58,12 @@ html {
   100% { transform: translateY(0px); }
 }
 
+/* Smooth Up and Down for Scroll Indicator */
+@keyframes smoothFloat {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, -12px); }
+}
+
 .animate-hero-zoom {
   animation: heroLinearZoom 3s linear forwards;
 }
@@ -68,6 +74,10 @@ html {
 
 .animate-fade-in-up {
   animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-smooth-float {
+  animation: smoothFloat 2.5s ease-in-out infinite;
 }
 
 .fade-in-section {

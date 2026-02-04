@@ -5,6 +5,8 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Tour from './pages/Tour';
 import Destinations from './pages/Destinations';
+import AboutUs from './pages/AboutUs';
+import ServiceDetail from './pages/ServiceDetail';
 import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
 
@@ -33,6 +35,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/tour/:tourId" element={<Tour />} />
             <Route path="/destinations" element={<Destinations />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/services/:serviceId" element={<ServiceDetail />} />
             {/* Catch-all redirect to Home */}
             <Route path="*" element={<Home />} />
           </Routes>

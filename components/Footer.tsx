@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
               <li><Link to="/#tours" className="hover:text-gold-600 transition-colors">Tour Packages</Link></li>
               <li><Link to="/destinations" className="hover:text-gold-600 transition-colors">Destinations</Link></li>
               <li><button onClick={() => scrollTo('services')} className="hover:text-gold-600 transition-colors text-left">Our Services</button></li>
-              <li><button onClick={() => scrollTo('about')} className="hover:text-gold-600 transition-colors text-left">About Us</button></li>
+              <li><Link to="/about-us" className="hover:text-gold-600 transition-colors text-left">About Us</Link></li>
               <li><button onClick={() => scrollTo('footer')} className="hover:text-gold-600 transition-colors text-left">Contact Us</button></li>
             </ul>
           </div>
