@@ -178,7 +178,7 @@ const Home: React.FC = () => {
               className="bg-white rounded-none shadow-2xl flex flex-col md:flex-row items-stretch"
               ref={dropdownRef}
             >
-              <div className="flex-1 flex flex-col px-6 py-5 border-b md:border-b-0 md:border-r border-stone-100 group transition-all hover:bg-stone-50 relative cursor-pointer" onClick={() => setOpenDropdown(openDropdown === 'dest' ? null : 'dest')}>
+              <div className="flex-1 flex flex-col px-4 md:px-6 py-3 md:py-5 border-b md:border-b-0 md:border-r border-stone-100 group transition-all hover:bg-stone-50 relative cursor-pointer" onClick={() => setOpenDropdown(openDropdown === 'dest' ? null : 'dest')}>
                 <label className="text-[8px] font-black uppercase tracking-[0.3em] text-stone-400 mb-1 group-hover:text-gold-500 transition-colors pointer-events-none">Destination</label>
                 <div className="flex items-center justify-between">
                   <span className="text-stone-900 font-bold text-xs md:text-sm uppercase tracking-wider">{searchDest || 'Any Region'}</span>
@@ -194,7 +194,7 @@ const Home: React.FC = () => {
                 )}
               </div>
 
-              <div className="flex-1 flex flex-col px-6 py-5 border-b md:border-b-0 md:border-r border-stone-100 group transition-all hover:bg-stone-50 relative cursor-pointer" onClick={() => setOpenDropdown(openDropdown === 'type' ? null : 'type')}>
+              <div className="flex-1 flex flex-col px-4 md:px-6 py-3 md:py-5 border-b md:border-b-0 md:border-r border-stone-100 group transition-all hover:bg-stone-50 relative cursor-pointer" onClick={() => setOpenDropdown(openDropdown === 'type' ? null : 'type')}>
                 <label className="text-[8px] font-black uppercase tracking-[0.3em] text-stone-400 mb-1 group-hover:text-gold-500 transition-colors pointer-events-none">Travel Type</label>
                 <div className="flex items-center justify-between">
                   <span className="text-stone-900 font-bold text-xs md:text-sm uppercase tracking-wider">{searchType === 'travel' ? 'Golf Travel' : searchType === 'stay' ? 'Stay & Play' : 'Any Type'}</span>
@@ -209,7 +209,7 @@ const Home: React.FC = () => {
                 )}
               </div>
 
-              <div className="flex-1 flex flex-col px-6 py-5 border-b md:border-b-0 md:border-r border-stone-100 group transition-all hover:bg-stone-50 relative cursor-pointer" onClick={() => setOpenDropdown(openDropdown === 'month' ? null : 'month')}>
+              <div className="flex-1 flex flex-col px-4 md:px-6 py-3 md:py-5 border-b md:border-b-0 md:border-r border-stone-100 group transition-all hover:bg-stone-50 relative cursor-pointer" onClick={() => setOpenDropdown(openDropdown === 'month' ? null : 'month')}>
                 <label className="text-[8px] font-black uppercase tracking-[0.3em] text-stone-400 mb-1 group-hover:text-gold-500 transition-colors pointer-events-none">Month</label>
                 <div className="flex items-center justify-between">
                   <span className="text-stone-900 font-bold text-xs md:text-sm uppercase tracking-wider">{searchMonth ? `${searchMonth} 2026` : 'Any Month'}</span>
@@ -225,7 +225,7 @@ const Home: React.FC = () => {
                 )}
               </div>
 
-              <button type="submit" className="bg-golf-500 hover:bg-golf-600 text-white font-black uppercase tracking-[0.2em] px-10 py-6 md:py-0 transition-all duration-500 text-[10px] md:text-xs whitespace-nowrap active:scale-[0.98] flex items-center justify-center gap-3">
+              <button type="submit" className="bg-golf-500 hover:bg-golf-600 text-white font-black uppercase tracking-[0.2em] px-10 py-4 md:py-0 transition-all duration-500 text-[10px] md:text-xs whitespace-nowrap active:scale-[0.98] flex items-center justify-center gap-3">
                 Find Tours
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </button>
@@ -244,46 +244,42 @@ const Home: React.FC = () => {
       </section>
 
       {/* 2. Unique Selling Points Bar */}
-      <div className="bg-white border-y border-stone-200 py-12">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-wrap justify-center md:justify-between items-center gap-y-10 gap-x-16">
+      <div className="bg-white border-y border-stone-200 py-4 md:py-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-12 grid grid-cols-3 gap-2 md:gap-8">
           
-          <div className="flex items-center gap-6 group">
-            <div className="w-14 h-14 flex items-center justify-center bg-golf-50 text-golf-500 rounded-full group-hover:bg-golf-500 group-hover:text-white transition-all duration-500 shadow-sm">
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex flex-col md:flex-row items-center md:items-center gap-2 md:gap-4 group text-center md:text-left">
+            <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center bg-golf-50 text-golf-500 rounded-full group-hover:bg-golf-500 group-hover:text-white transition-all duration-500 shadow-sm">
+              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <div className="text-left">
-              <h4 className="text-sm font-black text-stone-900 uppercase tracking-widest leading-none mb-2">Trusted & Licensed</h4>
-              <p className="text-xs font-bold text-stone-400 uppercase tracking-widest">Official SGA & STB Partner</p>
+            <div className="flex flex-col">
+              <h4 className="text-[8px] md:text-xs font-black text-stone-900 uppercase tracking-widest leading-none md:mb-1.5">Trusted & Licensed</h4>
+              <p className="hidden md:block text-[10px] font-bold text-stone-400 uppercase tracking-widest leading-tight">Official SGA & STB Partner</p>
             </div>
           </div>
 
-          <span className="hidden lg:block h-12 w-px bg-stone-100"></span>
-
-          <div className="flex items-center gap-6 group">
-            <div className="w-14 h-14 flex items-center justify-center bg-golf-50 text-golf-500 rounded-full group-hover:bg-golf-500 group-hover:text-white transition-all duration-500 shadow-sm">
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex flex-col md:flex-row items-center md:items-center gap-2 md:gap-4 group text-center md:text-left">
+            <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center bg-golf-50 text-golf-500 rounded-full group-hover:bg-golf-500 group-hover:text-white transition-all duration-500 shadow-sm">
+              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <div className="text-left">
-              <h4 className="text-sm font-black text-stone-900 uppercase tracking-widest leading-none mb-2">World-Class Fairways</h4>
-              <p className="text-xs font-bold text-stone-400 uppercase tracking-widest">Curated Championship Courses</p>
+            <div className="flex flex-col">
+              <h4 className="text-[8px] md:text-xs font-black text-stone-900 uppercase tracking-widest leading-none md:mb-1.5">World-Class Fairways</h4>
+              <p className="hidden md:block text-[10px] font-bold text-stone-400 uppercase tracking-widest leading-tight">Curated Championship Courses</p>
             </div>
           </div>
 
-          <span className="hidden lg:block h-12 w-px bg-stone-100"></span>
-
-          <div className="flex items-center gap-6 group">
-            <div className="w-14 h-14 flex items-center justify-center bg-golf-50 text-golf-500 rounded-full group-hover:bg-golf-500 group-hover:text-white transition-all duration-500 shadow-sm">
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex flex-col md:flex-row items-center md:items-center gap-2 md:gap-4 group text-center md:text-left">
+            <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center bg-golf-50 text-golf-500 rounded-full group-hover:bg-golf-500 group-hover:text-white transition-all duration-500 shadow-sm">
+              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
               </svg>
             </div>
-            <div className="text-left">
-              <h4 className="text-sm font-black text-stone-900 uppercase tracking-widest leading-none mb-2">Worry-Free Logistics</h4>
-              <p className="text-xs font-bold text-stone-400 uppercase tracking-widest">End-to-End Gear Handling</p>
+            <div className="flex flex-col">
+              <h4 className="text-[8px] md:text-xs font-black text-stone-900 uppercase tracking-widest leading-none md:mb-1.5">Worry-Free Logistics</h4>
+              <p className="hidden md:block text-[10px] font-bold text-stone-400 uppercase tracking-widest leading-tight">End-to-End Gear Handling</p>
             </div>
           </div>
 
@@ -294,7 +290,7 @@ const Home: React.FC = () => {
       <section id="about" ref={aboutSectionRef} className="bg-white py-20 md:py-24 relative overflow-hidden group/about">
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-32 items-start">
-            <div className="text-left space-y-16">
+            <div className="text-left space-y-16 order-2 md:order-1">
               <div className="animate-fade-in-up">
                 <h2 className="text-[10px] font-black text-stone-400 uppercase tracking-[0.4em] mb-2">The Brand</h2>
                 <h3 className="text-4xl md:text-6xl font-black text-golf-900 tracking-tight leading-none">About Us</h3>
@@ -332,7 +328,7 @@ const Home: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="md:sticky md:top-40 relative animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+            <div className="md:sticky md:top-40 relative animate-fade-in-up order-1 md:order-2" style={{ animationDelay: '400ms' }}>
               <div className="relative aspect-[4/5] w-full overflow-hidden shadow-[0_60px_120px_-30px_rgba(0,0,0,0.25)] bg-stone-100 group/parallax">
                 <div className="absolute inset-0 w-full h-[160%] -top-[30%] transition-transform duration-300 ease-out will-change-transform" style={{ transform: `translateY(${(parallaxY - 0.5) * -200}px)` }}>
                   <img src={IMAGES.aboutImage} alt="Golf Heritage" className="w-full h-full object-cover grayscale-[10%] group-hover/parallax:grayscale-0 transition-all duration-[2500ms]" />
@@ -429,7 +425,7 @@ const Home: React.FC = () => {
               <Link 
                 key={idx} 
                 to="/destinations"
-                className="group relative overflow-hidden bg-stone-900 border border-white/10 shadow-xl aspect-[3/4] block"
+                className="group relative overflow-hidden bg-stone-900 border border-white/10 shadow-xl aspect-[3/2] md:aspect-[3/4] block"
               >
                 <img 
                   src={dest.image} 
@@ -463,12 +459,12 @@ const Home: React.FC = () => {
               <h3 className="text-4xl md:text-5xl font-black text-golf-900 tracking-tight">Our Services</h3>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-stone-100 shadow-2xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 p-3 md:p-0 md:border md:border-stone-100 md:shadow-2xl">
             {SERVICES.map((service, idx) => (
               <Link 
                 key={service.id} 
                 to={`/services/${service.id}`}
-                className="group relative bg-white p-12 md:p-16 flex flex-col border-b md:border-b-0 md:border-r last:border-r-0 border-stone-100 transition-all duration-700 hover:bg-golf-950 overflow-hidden cursor-pointer"
+                className="group relative bg-white p-10 md:p-16 flex flex-col border border-stone-100 md:border-0 md:border-r last:border-r-0 transition-all duration-700 hover:bg-golf-950 overflow-hidden cursor-pointer shadow-lg md:shadow-none"
               >
                 <div className="absolute -bottom-6 -right-6 text-9xl font-black text-stone-50 group-hover:text-white/5 transition-colors duration-700 select-none">0{idx + 1}</div>
                 <div className="relative z-10 flex flex-col h-full">
@@ -483,9 +479,9 @@ const Home: React.FC = () => {
                   <h3 className="text-2xl md:text-3xl font-black text-stone-950 mb-6 group-hover:text-white transition-colors duration-700 tracking-tight text-left">{service.title}</h3>
                   <p className="text-stone-500 leading-relaxed mb-12 group-hover:text-stone-300 transition-colors duration-700 text-left font-medium text-base md:text-lg">{service.description}</p>
                   
-                  {/* Updated CTA to 'Coming Soon' */}
+                  {/* Updated CTA to 'See More' */}
                   <div className="mt-auto pt-6 flex items-center gap-3 text-gold-600 group-hover:text-white transition-all duration-500">
-                    <span className="text-[10px] font-black uppercase tracking-widest">Coming Soon</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">See More</span>
                     <svg className="w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>

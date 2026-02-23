@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
   const WHATSAPP_URL = "https://api.whatsapp.com/send/?phone=6590011558&text=Hello+Welcome+to+GolfBooking.sg.+How+may+we+assist+you+today%3F";
 
   const navLinks = [
-    { label: 'Tour Packages', path: '/#tours' },
+    { label: 'Tour Packages', path: '/tour-packages' },
     { label: 'Destination', path: '/destinations' },
     {
       label: 'Services',
@@ -47,15 +47,8 @@ const Navbar: React.FC = () => {
       ]
     },
     { label: 'About Us', path: '/about-us' },
-    { label: 'Contact Us', path: '#footer' }
+    { label: 'Contact Us', path: '/contact-us' }
   ];
-
-  const scrollToFooter = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const footer = document.querySelector('footer');
-    footer?.scrollIntoView({ behavior: 'smooth' });
-    setIsMenuOpen(false);
-  };
 
   return (
     <>
@@ -82,8 +75,6 @@ const Navbar: React.FC = () => {
             {/* Desktop Navigation Links */}
             <div className="hidden lg:flex space-x-7 items-center">
               {navLinks.map((item) => {
-                const isDisabled = item.label === 'About Us' || item.label === 'Contact Us';
-                
                 return (
                   <div 
                     key={item.label} 
@@ -91,30 +82,15 @@ const Navbar: React.FC = () => {
                     onMouseEnter={() => item.dropdown && handleMouseEnter(item.label)}
                     onMouseLeave={handleMouseLeave}
                   >
-                    {isDisabled ? (
-                      <span
-                        className={`text-[10px] font-black uppercase tracking-widest hover:text-gold-500 transition-colors whitespace-nowrap flex items-center gap-1 cursor-pointer ${scrolled ? 'text-stone-700' : 'text-stone-100'}`}
-                      >
-                        {item.label}
-                      </span>
-                    ) : item.path?.startsWith('#') ? (
-                      <button
-                        onClick={item.label === 'Contact Us' ? scrollToFooter : undefined}
-                        className={`text-[10px] font-black uppercase tracking-widest hover:text-gold-500 transition-colors whitespace-nowrap flex items-center gap-1 ${scrolled ? 'text-stone-700' : 'text-stone-100'}`}
-                      >
-                        {item.label}
-                      </button>
-                    ) : (
-                      <Link
-                        to={item.path || '#'}
-                        className={`text-[10px] font-black uppercase tracking-widest hover:text-gold-500 transition-colors whitespace-nowrap flex items-center gap-1 ${scrolled ? 'text-stone-700' : 'text-stone-100'}`}
-                      >
-                        {item.label}
-                        {item.dropdown && (
-                          <svg className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === item.label ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        )}
-                      </Link>
-                    )}
+                    <Link
+                      to={item.path || '#'}
+                      className={`text-[10px] font-black uppercase tracking-widest hover:text-gold-500 transition-colors whitespace-nowrap flex items-center gap-1 ${scrolled ? 'text-stone-700' : 'text-stone-100'}`}
+                    >
+                      {item.label}
+                      {item.dropdown && (
+                        <svg className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === item.label ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      )}
+                    </Link>
 
                     {/* Dropdown Menu */}
                     {item.dropdown && activeDropdown === item.label && (
@@ -179,30 +155,15 @@ const Navbar: React.FC = () => {
         <div className="flex flex-col h-full pt-28 pb-10 px-6 overflow-y-auto">
           <div className="flex flex-col space-y-1">
             {navLinks.map((item) => {
-              const isDisabled = item.label === 'About Us' || item.label === 'Contact Us';
-              
               return (
                 <div key={item.label} className="border-b border-stone-50 pb-3 mb-1">
                   <div className="flex items-center justify-between py-2">
-                    {isDisabled ? (
-                      <span className="text-xs font-black text-golf-900 uppercase tracking-[0.3em] text-left cursor-pointer">
-                        {item.label}
-                      </span>
-                    ) : item.path?.startsWith('#') ? (
-                      <button 
-                        onClick={item.label === 'Contact Us' ? scrollToFooter : undefined}
-                        className="text-xs font-black text-golf-900 uppercase tracking-[0.3em] text-left"
-                      >
-                        {item.label}
-                      </button>
-                    ) : (
-                      <Link
-                        to={item.path || '#'}
-                        className="text-xs font-black text-golf-900 uppercase tracking-[0.3em] text-left"
-                      >
-                        {item.label}
-                      </Link>
-                    )}
+                    <Link
+                      to={item.path || '#'}
+                      className="text-xs font-black text-golf-900 uppercase tracking-[0.3em] text-left"
+                    >
+                      {item.label}
+                    </Link>
                     {item.dropdown && (
                       <button onClick={() => setActiveDropdown(activeDropdown === item.label ? null : item.label)} className="p-2">
                         <svg className={`w-4 h-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>

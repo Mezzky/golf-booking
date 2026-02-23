@@ -14,6 +14,231 @@ export const IMAGES = {
   finalCtaBg: "https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?auto=format&fit=crop&q=80&w=2000",
 };
 
+export interface Course {
+  id: string;
+  name: string;
+  location: string;
+  country: string;
+  image: string;
+  par: number;
+  yardage: string;
+  difficulty: string;
+  priceFrom: string;
+  type: string;
+}
+
+export interface HandicapPlan {
+  id: string;
+  name: string;
+  duration: string;
+  price: string;
+  features: string[];
+  isPopular?: boolean;
+}
+
+export interface Vehicle {
+  id: string;
+  name: string;
+  capacity: string;
+  bagCapacity: string;
+  features: string[];
+  image: string;
+  priceFrom: string;
+  category: string;
+}
+
+export const VEHICLES: Vehicle[] = [
+  {
+    id: 'vip-combi',
+    name: '10-Seater VIP Combi',
+    capacity: '10 Passengers',
+    bagCapacity: '10 Golf Bags',
+    features: ['High Roof Space', 'Leather Seating', 'On-board Refreshments'],
+    image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800',
+    priceFrom: '150',
+    category: 'VIP Van'
+  },
+  {
+    id: 'luxury-coach',
+    name: '40-Seater Luxury Coach',
+    capacity: '40 Passengers',
+    bagCapacity: '40 Golf Bags',
+    features: ['Dedicated Luggage Bay', 'PA System', 'Microphone for Guides'],
+    image: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&q=80&w=800',
+    priceFrom: '450',
+    category: 'Coach'
+  },
+  {
+    id: 'premium-suv',
+    name: 'Premium 4-Seater SUV',
+    capacity: '4 Passengers',
+    bagCapacity: '2-3 Golf Bags',
+    features: ['Executive Transfers', 'Clean Minimalist Interior'],
+    image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800',
+    priceFrom: '80',
+    category: 'Executive'
+  },
+  {
+    id: 'luxury-mpv',
+    name: 'Luxury 7-Seater MPV',
+    capacity: '6 Passengers',
+    bagCapacity: '4-5 Golf Bags',
+    features: ['Alphard/Vellfire Series', 'Captain Seats', 'Dual Power Sliding Doors'],
+    image: 'https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&q=80&w=800',
+    priceFrom: '120',
+    category: 'Luxury MPV'
+  },
+  {
+    id: 'mini-bus',
+    name: '23-Seater Mini Bus',
+    capacity: '23 Passengers',
+    bagCapacity: '15 Golf Bags',
+    features: ['Spacious Interior', 'Air-Conditioned', 'Professional Driver'],
+    image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800',
+    priceFrom: '250',
+    category: 'Mini Bus'
+  },
+  {
+    id: 'exec-sedan',
+    name: 'Private Executive Sedan',
+    capacity: '3 Passengers',
+    bagCapacity: '2 Golf Bags',
+    features: ['Mercedes E-Class or equivalent', 'Chauffeur Service', 'Airport Meet & Greet'],
+    image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800',
+    priceFrom: '90',
+    category: 'Executive'
+  }
+];
+
+export const HANDICAP_PLANS: HandicapPlan[] = [
+  {
+    id: 'basic-1y',
+    name: 'Standard Maintenance',
+    duration: '1 Year Membership',
+    price: '150',
+    features: [
+      'Official WHS Handicap Index',
+      'USGA/SGA Recognized',
+      'Digital Scorecard Submission',
+      'Peer Review Access',
+      'Tournament Eligibility'
+    ],
+  },
+  {
+    id: 'premium-2y',
+    name: 'Elite Golfer Plan',
+    duration: '2 Years Membership',
+    price: '280',
+    features: [
+      'All Standard Features',
+      'Priority Tournament Invites',
+      'Exclusive Partner Discounts',
+      'Extended Validity',
+      'Concierge Score Management'
+    ],
+    isPopular: true
+  }
+];
+
+export const COURSES: Course[] = [
+  {
+    id: 'klgcc-west',
+    name: 'KLGCC West Course',
+    location: 'Kuala Lumpur',
+    country: 'Malaysia',
+    image: 'https://cdn.sanity.io/images/osg5upb6/production/cbf329f7bd440c19deb9c8d082eaeb2154710e8e-800x468.jpg',
+    par: 72,
+    yardage: '6,450m',
+    difficulty: 'Championship',
+    priceFrom: '280',
+    type: 'Parkland'
+  },
+  {
+    id: 'sentosa-serapong',
+    name: 'Sentosa Golf Club (Serapong)',
+    location: 'Sentosa Island',
+    country: 'Singapore',
+    image: 'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?auto=format&fit=crop&q=80&w=800',
+    par: 72,
+    yardage: '6,675m',
+    difficulty: 'Professional',
+    priceFrom: '550',
+    type: 'Championship'
+  },
+  {
+    id: 'kota-permai',
+    name: 'Kota Permai Golf & CC',
+    location: 'Selangor',
+    country: 'Malaysia',
+    image: 'https://cdn.sanity.io/images/osg5upb6/production/a78b8f09b900b86dcaea2f4a68ed246aa75594a0-800x468.jpg',
+    par: 72,
+    yardage: '6,396m',
+    difficulty: 'Advanced',
+    priceFrom: '220',
+    type: 'Parkland'
+  },
+  {
+    id: 'horizon-hills',
+    name: 'Horizon Hills Golf & CC',
+    location: 'Johor Bahru',
+    country: 'Malaysia',
+    image: 'https://cdn.sanity.io/images/osg5upb6/production/f508578a3b5eb3e161cba3eb20f6c0ad083d9432-800x468.jpg',
+    par: 72,
+    yardage: '6,271m',
+    difficulty: 'Advanced',
+    priceFrom: '120',
+    type: 'Signature'
+  },
+  {
+    id: 'black-mountain',
+    name: 'Black Mountain Golf Club',
+    location: 'Hua Hin',
+    country: 'Thailand',
+    image: 'https://www.phuketgolfholidays.com/img/slides/slide_3.jpg',
+    par: 72,
+    yardage: '6,700m',
+    difficulty: 'Elite',
+    priceFrom: '350',
+    type: 'Resort'
+  },
+  {
+    id: 'laguna-phuket',
+    name: 'Laguna Golf Phuket',
+    location: 'Phuket',
+    country: 'Thailand',
+    image: 'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&q=80&w=800',
+    par: 71,
+    yardage: '6,190m',
+    difficulty: 'Intermediate',
+    priceFrom: '290',
+    type: 'Resort'
+  },
+  {
+    id: 'ria-bintan',
+    name: 'Ria Bintan (Ocean Course)',
+    location: 'Bintan',
+    country: 'Indonesia',
+    image: 'https://www.riabintan.com/wp-content/uploads/2021/04/Holes-1-Forest-Ocean-Aerial.jpg',
+    par: 72,
+    yardage: '6,470m',
+    difficulty: 'Moderate',
+    priceFrom: '180',
+    type: 'Links-style'
+  },
+  {
+    id: 'brg-danang',
+    name: 'BRG Da Nang Golf Resort',
+    location: 'Da Nang',
+    country: 'Vietnam',
+    image: 'https://images.ctfassets.net/pg9ls4pr74b0/4W70Uy6AMYdcIxKBp0TeF5/aa7496cbfa0e1e87ba7f5ce62e4f1fe9/FLC_Ha_Long_Bay_Golf_Club__Hanoi.jpg',
+    par: 72,
+    yardage: '6,550m',
+    difficulty: 'Championship',
+    priceFrom: '240',
+    type: 'Links-style'
+  }
+];
+
 export const SERVICES: ServiceItem[] = [
   {
     id: "tee-time",
@@ -52,7 +277,7 @@ export const DESTINATIONS: DestinationItem[] = [
   { country: "Vietnam", count: "10+ Packages", image: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&q=80&w=800" },
   { country: "Japan", count: "5+ Packages", image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800" },
   { country: "Philippines", count: "4+ Packages", image: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&q=80&w=800" },
-  { country: "Cambodia", count: "3+ Packages", image: "https://images.unsplash.com/photo-1500043204644-714de6e718bc?auto=format&fit=crop&q=80&w=800" },
+  { country: "Cambodia", count: "3+ Packages", image: "https://cdn.sanity.io/images/iqsqxgxl/production/b260c84ba9dd796be141c7acf05c10fc044220d6-4669x3113.jpg" },
 ];
 
 export const TESTIMONIALS: TestimonialItem[] = [

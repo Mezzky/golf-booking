@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { SERVICES } from '../data';
@@ -16,21 +15,24 @@ const ServiceDetail: React.FC = () => {
 
   return (
     <div className="bg-white min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden bg-black">
+      {/* 1. Cinematic Hero Header - Standardized to Destinations Style */}
+      <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden bg-black">
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 opacity-40 animate-hero-zoom blur-sm"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 opacity-60 animate-hero-zoom scale-105"
           style={{ backgroundImage: `url('${service.image || 'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&q=80&w=2000'}')` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/90 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90 z-10" />
         
-        <div className="relative z-20 text-center px-6 max-w-4xl mx-auto">
-          <span className="inline-block text-[10px] md:text-xs font-black uppercase tracking-[0.5em] text-gold-500 mb-6 bg-gold-500/10 px-4 py-2 rounded-full border border-gold-500/20">Coming Soon</span>
-          <h1 className="text-4xl md:text-7xl font-black text-white tracking-tight leading-none mb-6 italic">
+        <div className="relative z-20 text-center px-6 max-w-5xl mx-auto animate-fade-in-up">
+          <div className="inline-flex items-center gap-3 mb-6">
+            <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.5em] text-gold-500 drop-shadow-md">Concierge Service</span>
+            <span className="bg-gold-500/10 text-gold-500 text-[8px] font-black px-2 py-0.5 border border-gold-500/20 uppercase tracking-widest">Coming Soon</span>
+          </div>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight mb-8 drop-shadow-2xl leading-none">
             {service.title}
           </h1>
-          <p className="text-lg md:text-xl text-stone-300 font-medium tracking-wide max-w-2xl mx-auto uppercase opacity-80">
-            Advanced Golf Management Solutions
+          <p className="max-w-2xl mx-auto text-stone-300 font-medium text-sm md:text-base leading-relaxed uppercase tracking-[0.3em] opacity-90">
+            Advanced Golf Management Solutions for the discerning professional player.
           </p>
         </div>
       </section>
@@ -40,12 +42,12 @@ const ServiceDetail: React.FC = () => {
         <div className="grid lg:grid-cols-12 gap-16 lg:gap-32 items-center justify-center text-center">
           <div className="lg:col-span-12 space-y-12">
             <div className="space-y-8 max-w-3xl mx-auto">
-              <h2 className="text-[10px] font-black text-stone-400 uppercase tracking-[0.4em]">Upcoming Service</h2>
-              <p className="text-3xl md:text-5xl font-black text-stone-900 leading-tight tracking-tight italic">
+              <h2 className="text-[10px] font-black text-stone-400 uppercase tracking-[0.4em] mb-3">Upcoming Service</h2>
+              <p className="text-3xl md:text-5xl font-black text-stone-900 leading-tight tracking-tight">
                 We are currently refining our <span className="text-gold-500">{service.title}</span> experience.
               </p>
               <div className="w-20 h-1 bg-gold-500 mx-auto"></div>
-              <p className="text-stone-500 text-lg md:text-xl leading-relaxed font-medium">
+              <p className="text-stone-50 text-lg md:text-xl leading-relaxed font-medium bg-golf-950 p-6 shadow-xl inline-block text-white">
                 Our team is working behind the scenes to establish the highest level of integration and priority access for our members. We aim to deliver a service that goes beyond expectations.
               </p>
             </div>

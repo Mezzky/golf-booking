@@ -1,4 +1,3 @@
-
 import React from 'react';
 import SectionContainer from '../components/SectionContainer';
 import { DESTINATIONS } from '../data';
@@ -16,17 +15,14 @@ const Destinations: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90 z-10" />
         
         <div className="relative z-20 text-center px-6 max-w-5xl mx-auto animate-fade-in-up">
-          <span className="inline-block text-[10px] md:text-xs font-black uppercase tracking-[0.6em] text-gold-500 mb-6 drop-shadow-md">Our Global Network</span>
-          <h1 className="text-5xl md:text-8xl font-black text-white tracking-tighter italic mb-8 drop-shadow-2xl leading-none">
+          <span className="inline-block text-[10px] md:text-xs font-black uppercase tracking-[0.5em] text-gold-500 mb-6 drop-shadow-md">Our Global Network</span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight mb-8 drop-shadow-2xl leading-none">
             Iconic Fairways
           </h1>
-          <p className="max-w-2xl mx-auto text-stone-300 font-medium text-sm md:text-base leading-relaxed uppercase tracking-[0.2em] opacity-90">
+          <p className="max-w-2xl mx-auto text-stone-300 font-medium text-sm md:text-base leading-relaxed uppercase tracking-[0.3em] opacity-90">
             From the emerald greens of Southeast Asia to the coastal horizons of the Mediterranean.
           </p>
         </div>
-        
-        {/* Decorative element */}
-        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white to-transparent z-20"></div>
       </section>
 
       {/* 2. Destination Grid Section */}
@@ -45,7 +41,7 @@ const Destinations: React.FC = () => {
                 <span className="text-gold-500 text-[10px] md:text-xs font-black uppercase tracking-[0.4em] mb-4 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
                   {dest.count}
                 </span>
-                <h3 className="text-4xl md:text-6xl font-black text-white mb-8 italic tracking-tight group-hover:text-gold-100 transition-colors duration-500">
+                <h3 className="text-4xl md:text-6xl font-black text-white mb-8 tracking-tight group-hover:text-gold-100 transition-colors duration-500">
                   {dest.country}
                 </h3>
                 
@@ -73,12 +69,12 @@ const Destinations: React.FC = () => {
         <SectionContainer>
           <div className="text-center mb-20 relative z-10">
              <h3 className="text-[10px] font-black text-stone-400 uppercase tracking-[0.5em] mb-6">Strategic Alliances</h3>
-             <p className="text-2xl md:text-4xl font-black text-stone-950 tracking-tight italic">Collaborating with the region's most prestigious golf authorities.</p>
+             <p className="text-2xl md:text-4xl font-black text-stone-950 tracking-tight">Collaborating with the region's most prestigious golf authorities.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-12 md:gap-24 items-center relative z-10">
             {['SGA', 'MGA', 'TGA', 'VGA', 'IGA'].map((partner) => (
               <div key={partner} className="group cursor-default">
-                <span className="text-2xl md:text-4xl font-black tracking-tighter uppercase italic text-stone-300 group-hover:text-golf-900 transition-all duration-500 select-none">
+                <span className="text-2xl md:text-4xl font-black tracking-tighter uppercase text-stone-300 group-hover:text-golf-900 transition-all duration-500 select-none">
                   {partner}
                 </span>
                 <div className="h-0.5 w-0 bg-gold-500 mx-auto mt-2 group-hover:w-full transition-all duration-500"></div>

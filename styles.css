@@ -19,6 +19,18 @@ html {
   background: #263e1a;
 }
 
+/* Internal custom scrollbar for modals */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #e7e5e4;
+  border-radius: 10px;
+}
+
 /* Hide scrollbar utility */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
@@ -110,4 +122,51 @@ html {
 
 .neon-blink {
   animation: neon-pulse 3s ease-in-out infinite alternate;
+}
+
+/* Range Slider Customization */
+.price-range-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 24px; /* Sufficient height to prevent thumb clipping */
+  background: transparent;
+  outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.price-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #429716;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 0; /* Centering handled by background-position on the track */
+}
+
+.price-range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 8px rgba(66, 151, 22, 0.4);
+}
+
+/* Firefox */
+.price-range-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #429716;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+/* Track styling for Firefox to match the background trick */
+.price-range-slider::-moz-range-track {
+  height: 4px;
+  background: #e7e5e4;
+  border-radius: 5px;
 }
